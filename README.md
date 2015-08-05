@@ -21,17 +21,16 @@ npm install
 
 ```bash
 # cd sseweb/sites/default/themes/sse
-gulp js
-gulp css
+gulp
 ```
 
 ### 调试
 
-可以使用 gulp 的 `watch` 任务实现源码变更后自动重新编译：
+添加 `--watch` 参数，使得源码变更后自动重新编译：
 
 ```bash
 # cd sseweb/sites/default/themes/sse
-gulp watch
+gulp --watch
 ```
 
 ## 第三方项目及协议
