@@ -4,6 +4,7 @@
   "author": "TJUSSE",
   "license": "MIT",
   "devDependencies": {
+    "autoprefixer-stylus": "^0.7.1",
     "event-stream": "^3.3.1",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",
@@ -18,5 +19,8 @@
     "jeet": "^6.1.2",
     "rupture": "^0.6.1",
     "yargs": "^3.17.1"
+  },
+  "scripts": {
+    "postinstall": "find node_modules/ -name '*.info' -type f -delete"
   }
 }

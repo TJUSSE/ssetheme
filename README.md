@@ -17,6 +17,8 @@ npm install --global gulp
 npm install
 ```
 
+注意，对于 Windows 来说，请手工删除 `node_modules` 及子目录下的 `.info` 文件。
+
 ### 编译生成前端
 
 ```bash
@@ -32,6 +34,16 @@ gulp
 # cd sseweb/sites/default/themes/sse
 gulp --watch
 ```
+
+## 正确姿势
+
+### 修改主菜单个数和颜色
+
+1. 在 Drupal 中修改主菜单（顶级菜单需要指定 ID）
+
+2. 修改 `src/css/ui/0_variable.styl`
+
+3. 修改 `$sse_section_colors@template.php`
 
 ## 第三方项目及协议
 

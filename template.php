@@ -9,6 +9,21 @@
 
 
 /**
+ * 这里指定的是 <meta name="theme-color"> 中的颜色，该属性可以指定 Android Chrome 浏览器中标题栏颜色
+ * @var array
+ */
+$sse_section_colors = [
+  'default' =>   '#53A0D4',
+  'overview' =>  '#9FC1E3',
+  'admission' => '#E3B48D',
+  'education' => '#E1A6E3',
+  'research' =>  '#F8DA89',
+  'activity' =>  '#C9D36F',
+  'news' =>      '#DEA1A1',
+  'notice' =>    '#A4CBCC',
+];
+
+/**
  * Override or insert variables into the maintenance page template.
  *
  * @param $variables
@@ -34,9 +49,9 @@ function sse_preprocess_maintenance_page(&$variables, $hook) {
  * @param $hook
  *   The name of the template being rendered ("html" in this case.)
  */
-/* -- Delete this line if you want to use this function
 function sse_preprocess_html(&$variables, $hook) {
-  $variables['sample_variable'] = t('Lorem ipsum.');
+  $variables['base_path'] = base_path();
+  $variables['path_to_sse'] = drupal_get_path('theme', 'sse');
 
   // The body tag's classes are controlled by the $classes_array variable. To
   // remove a class from $classes_array, use array_diff().
