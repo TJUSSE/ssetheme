@@ -13,7 +13,7 @@
 
 screenshot  = screenshot.png
 name        = Tongji SSE
-description = Designed for SSE website
+description = 同济大学软件学院网站主站主题
 
 
 
@@ -124,7 +124,7 @@ features[] = secondary_menu
 ; Set the default values of settings on the theme-settings.php form.
 
 settings[zen_breadcrumb]           = yes
-settings[zen_breadcrumb_separator] = ' › '
+settings[zen_breadcrumb_separator] = ' · '
 settings[zen_breadcrumb_home]      = 1
 settings[zen_breadcrumb_trailing]  = 0
 settings[zen_breadcrumb_title]     = 0
