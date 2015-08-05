@@ -7,21 +7,63 @@
  * @see https://drupal.org/node/1728096
  */
 
+/**
+ * 获取不同区块的主题颜色
+ */
+function sse_get_section_color($key)
+{
+  /**
+   * 这里指定的是 <meta name="theme-color"> 中的颜色，该属性可以指定 Android Chrome 浏览器中标题栏颜色
+   * @var array
+   */
+  static $sse_section_colors = [
+    'default' =>   '#53A0D4',
+    'overview' =>  '#9FC1E3',
+    'admission' => '#E3B48D',
+    'education' => '#E1A6E3',
+    'research' =>  '#F8DA89',
+    'activity' =>  '#C9D36F',
+    'news' =>      '#DEA1A1',
+    'notice' =>    '#A4CBCC',
+  ];
+  if (isset($sse_section_colors[$key])) {
+    return $sse_section_colors[$key];
+  } else {
+    return $sse_section_colors['default'];
+  }
+}
 
 /**
- * 这里指定的是 <meta name="theme-color"> 中的颜色，该属性可以指定 Android Chrome 浏览器中标题栏颜色
- * @var array
+ * 获取经过处理的导航栏
+ * @param  boolean $extra 是否要包含新闻和通知
  */
-$sse_section_colors = [
-  'default' =>   '#53A0D4',
-  'overview' =>  '#9FC1E3',
-  'admission' => '#E3B48D',
-  'education' => '#E1A6E3',
-  'research' =>  '#F8DA89',
-  'activity' =>  '#C9D36F',
-  'news' =>      '#DEA1A1',
-  'notice' =>    '#A4CBCC',
-];
+function sse_get_navigations($extra = false)
+{
+  static $menu_name = 'menu-sse-navigation-menu';
+  $result = [];
+  $menu_tree = menu_tree_all_data($menu_name);
+  foreach ($menu_tree as &$section) {
+    $entity = menu_fields_load_by_mlid($section['link']['mlid']);
+    $menu_id = $entity->wrapper()->field_id->value();
+    $items = [];
+    foreach ($section['below'] as &$item) {
+      $items[] = [
+        'href' => url($item['link']['href']),
+        'text' => $item['link']['title'],
+      ];
+    }
+    unset($item);
+    $result[] = [
+      'text' => $section['link']['title'],
+      'id' => $menu_id,
+      'items' => $items
+    ];
+  }
+  unset($section);
+  return $result;
+}
+
+
 
 /**
  * Override or insert variables into the maintenance page template.
