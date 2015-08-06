@@ -43,6 +43,9 @@ function sse_get_navigations($extra = false)
   $result = [];
   $menu_tree = menu_tree_all_data($menu_name);
   foreach ($menu_tree as &$section) {
+    if ($section['link']['hidden'] === true) {
+      continue;
+    }
     $entity = menu_fields_load_by_mlid($section['link']['mlid']);
     $menu_id = $entity->wrapper()->field_id->value();
     $items = [];
@@ -63,6 +66,34 @@ function sse_get_navigations($extra = false)
   return $result;
 }
 
+
+function sse_footer_navigation_output()
+{
+  $output = '';
+  $navi = sse_get_navigations(false);
+  foreach ($navi as &$section) {
+    $output .= '<div class="footer-navi__section footer-navi__section__'.$section['id'].'">';
+    $output .= '<h1 class="footer-navi__section-title">'.$section['text'].'</h1>';
+    $output .= '<ul class="footer-navi__section-items">';
+    foreach ($section['items'] as &$item) {
+      $output .= '<li class="footer-navi__section__item"><a href="'.$item['href'].'" target="_self">'.$item['text'].'</a></li>';
+    }
+    unset($item);
+    $output .= '</ul></div>';
+  }
+  unset($section);
+  return $output;
+}
+
+
+function sse_links__locale_block(&$vars) {
+  $vars['links']['contributors'] = [
+    'href' => '<front>',
+    'title' => '开发人员'
+  ];
+  $content = theme_links($vars);
+  return $content;
+}
 
 
 /**

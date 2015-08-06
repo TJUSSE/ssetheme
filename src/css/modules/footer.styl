@@ -28,9 +28,15 @@ $footer-text-link = mix(#FFF, $footer-bgcolor, 70%)
 .footer-info
   float: right
   text-align: right
+  
+  p
+    margin: 10px 0
 
-.footer-info p
-  margin: 10px 0
+  &>ul, li
+    display: inline-block
+  
+  li
+    margin-left: 10px
 
 +below(rupture.desktop-cutoff)
   .footer-navi, .footer-info
@@ -42,9 +48,11 @@ $footer-text-link = mix(#FFF, $footer-bgcolor, 70%)
   .footer-info
     text-align: center
 
-  .footer-info p
-    display: inline-block
-    margin: 10px 5px
+    &>div, p
+      display: inline-block
+    
+    p
+      margin: 0 5px
 
 // 桌面布局：整个 footer 分为两栏，左栏包含各个 section，宽度固定
 .footer-navi__section

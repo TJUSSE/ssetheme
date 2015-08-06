@@ -105,32 +105,10 @@
 
   <footer class="footer">
     <section class="content-container clearfix">
-      <div class="footer-navi clearfix">
-<?php
-  $footer_menu_tree = sse_get_navigations(false);
-  foreach ($footer_menu_tree as &$section) {
-?>
-        <div class="footer-navi__section footer-navi__section__<?php print $section['id'] ?>">
-          <h1 class="footer-navi__section-title"><?php print $section['text'] ?></h1>
-          <ul class="footer-navi__section-items">
-<?php
-    foreach ($section['items'] as &$item) {
-?>
-            <li class="footer-navi__section__item"><a href="<?php print $item['href'] ?>" target="_self"><?php print $item['text'] ?></a></li>
-<?php
-    }
-    unset($item);
-?>
-          </ul>
-        </div>
-<?php
-  }
-  unset($section);
-?>
-      </div>
+      <div class="footer-navi clearfix"><?php print sse_footer_navigation_output(); ?></div>
       <div class="footer-info">
-        <?php print render($page['footer']); ?>
-      </div>      
+        <?php $footer_block = module_invoke('panels_mini', 'block_view', 'footer_info'); print $footer_block['content']; ?>
+      </div>
     </section>
   </footer>
 
