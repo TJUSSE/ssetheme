@@ -1,0 +1,57 @@
+$sidenav-bgcolor = #3D3D3D
+
+.sidenav
+  position: relative
+  top: -60px
+
+// 折角效果
+.sidenav__edge
+  position: absolute
+  display: block
+  right: 0
+  top: 85px
+  width: 30px
+  height: 30px
+
+.sidenav__title__link
+  display: block
+  background: #F6F6F6
+  line-height: 85px
+  color: #717171
+  font-size: 23px
+  padding: 0 20px
+  &:hover, &:active, &:visited
+    color: #717171
+    text-decoration: none
+
+.sidenav__list
+  background: $sidenav-bgcolor
+  padding: 20px 0
+  margin-right: 30px
+
+.sidenav__item__link
+  display: block
+  padding: 15px 20px
+  padding-left: 15px
+  border-left: 5px solid $sidenav-bgcolor
+  color: #FFF
+  transition: background-color .2s ease-in-out, border-color .2s ease-in-out
+  &:hover, &:active, &:visited
+    color: #FFF
+    text-decoration: none
+
+for $section-name, $section-color in $section-colors
+  // 鼠标移入项
+  .sidenav--section-{$section-name} .sidenav__item__link:hover
+    border-color: mix($section-color, $sidenav-bgcolor, 10%)
+    background: @border-color
+  
+  // 当前项
+  .sidenav--section-{$section-name} .sidenav__item--active .sidenav__item__link
+    border-color: $section-color
+    background: mix($section-color, $sidenav-bgcolor, 20%)
+  
+  // 折角
+  .sidenav--section-{$section-name} .sidenav__edge
+    // 保留一部分距离来消除锯齿
+    background: linear-gradient(150deg, darken($section-color, 30%) 34%, transparent 36%)

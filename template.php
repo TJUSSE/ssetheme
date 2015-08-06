@@ -63,6 +63,23 @@ function sse_get_current_section()
 }
 
 /**
+ * 获得当前导航面包屑
+ */
+function sse_get_breadcrumb()
+{
+  $route = menu_get_active_trail();
+  return $route;
+}
+
+/**
+ * 返回面包屑 HTML
+ */
+function sse_breadcrumb_output()
+{
+
+}
+
+/**
  * 获取经过处理的导航栏
  * @param  boolean $extra 是否要包含新闻和通知
  */
@@ -96,7 +113,7 @@ function sse_get_navigations($extra = false)
 }
 
 /**
- * 输出 footer 导航
+ * 返回 footer 导航
  */
 function sse_footer_navigation_output()
 {
@@ -119,7 +136,8 @@ function sse_footer_navigation_output()
 /**
  * 渲染 footer 的语言项时增加一项「开发人员」
  */
-function sse_links__locale_block(&$vars) {
+function sse_links__locale_block(&$vars)
+{
   $vars['links']['contributors'] = [
     'href' => '<front>',
     'title' => '开发人员'
@@ -128,6 +146,43 @@ function sse_links__locale_block(&$vars) {
   return $content;
 }
 
+/**
+ * 判断当前页面是否包含侧栏导航
+ */
+function sse_has_sidenav()
+{
+  $route = menu_get_active_trail();
+  return (count($route) >= 2 && $route[1]['menu_name'] === 'menu-sse-navigation-menu');
+}
+
+/**
+ * 返回侧栏导航 HTML
+ */
+function sse_sidenav_output()
+{
+  $route = menu_get_active_trail();
+  $parent = $route[1];
+  $param = [
+    'active_trail' => array($parent['plid']),
+    'only_active_trail' => false,
+    'min_depth' => $parent['depth'] + 1,
+    'max_depth' => $parent['depth'] + 1,
+    'conditions' => array('plid' => $parent['mlid']),
+  ];
+  $items = menu_build_tree($parent['menu_name'], $param);
+  $entity = menu_fields_load_by_mlid($parent['mlid']);
+  $menu_id = $entity->wrapper()->field_id->value();
+  $output = '<nav class="sidenav sidenav--section-'.$menu_id.'">';
+  $output .= '<h1 class="sidenav__title"><a href="'.$parent['title_link'].'" target="_self" class="sidenav__title__link">'. $parent['title'] .'</a></h1>';
+  $output .= '<div class="sidenav__edge"></div><ul class="sidenav__list">';
+  foreach ($items as $item) {
+    $output .= '<li class="sidenav__item'. ((count($route) >= 3 && $item['link']['mlid'] === $route[2]['mlid']) ? ' sidenav__item--active' : '') .'">';
+    $output .= '<a href="'.url($item['link']['link_path']).'" target="_self" class="sidenav__item__link">'.$item['link']['title'].'</a>';
+    $output .= '</li>';
+  }
+  $output .= '</ul></nav>';
+  return $output;
+}
 
 /**
  * Override or insert variables into the maintenance page template.

@@ -2,14 +2,24 @@
 
   <header class="header">
     <div class="header__background"></div>
-    <section class="content-container clearfix">
-      <div class="header__logo-container">
+    <div class="content-container clearfix">
+      <section class="header__logo-container">
         <a href="<?php print $front_page ?>" class="header__logo"><img src="<?php print sse_asset_path() ?>/img/logo.png" alt="<?php print t('Home') ?>"/></a>
-      </div>
+      </section>
       <?php print render($page['header']); ?>
-    </section>
+    </div>
   </header>
 
+  <div class="content<?php if (sse_has_sidenav()) print ' content-has-sidenav'; ?>">
+    <div class="content-container clearfix">
+      <?php print sse_sidenav_output() ?>
+      <section class="main-content">
+        <?php sse_get_breadcrumb(); ?>
+        <?php print render($page['content']); ?>
+      </section>
+    </div>
+  </div>
+<!--
   <div id="main">
 
     <div id="content" class="column" role="main">
@@ -72,14 +82,14 @@
     <?php endif; ?>
 
   </div>
-
+-->
   <footer class="footer">
-    <section class="content-container clearfix">
-      <div class="footer__navi clearfix"><?php print sse_footer_navigation_output(); ?></div>
-      <div class="footer__info">
+    <div class="content-container clearfix">
+      <section class="footer__navi clearfix"><?php print sse_footer_navigation_output(); ?></section>
+      <section class="footer__info">
         <?php $footer_block = module_invoke('panels_mini', 'block_view', 'footer_info'); print $footer_block['content']; ?>
-      </div>
-    </section>
+      </section>
+    </div>
   </footer>
 </div>
 
