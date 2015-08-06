@@ -6,7 +6,7 @@ $footer-text = mix(#FFF, $footer-bgcolor, 60%)
 $footer-text-link = mix(#FFF, $footer-bgcolor, 70%)
 
 .footer
-  background: $footer-bgcolor url(../img/footer-texture@1x.png) no-repeat right bottom
+  background: $footer-bgcolor url(../img/footer-texture.png) no-repeat right bottom
   padding: 50px 0
   color: $footer-text
   font-size: 14px
@@ -22,10 +22,10 @@ $footer-text-link = mix(#FFF, $footer-bgcolor, 70%)
   .footer
     background-image: url(../img/footer-texture@2x.png)
 
-.footer-navi
+.footer__navi
   float: left
 
-.footer-info
+.footer__info
   float: right
   text-align: right
   
@@ -39,13 +39,13 @@ $footer-text-link = mix(#FFF, $footer-bgcolor, 70%)
     margin-left: 10px
 
 +below(rupture.desktop-cutoff)
-  .footer-navi, .footer-info
+  .footer__navi, .footer__info
     float: none
   
-  .footer-navi
+  .footer__navi
     margin: 0 20px
 
-  .footer-info
+  .footer__info
     text-align: center
 
     &>div, p
@@ -55,7 +55,7 @@ $footer-text-link = mix(#FFF, $footer-bgcolor, 70%)
       margin: 0 5px
 
 // 桌面布局：整个 footer 分为两栏，左栏包含各个 section，宽度固定
-.footer-navi__section
+.footer__navi__section
   float: left
   width: $footer-section-width
 
@@ -68,44 +68,44 @@ $footer-text-link = mix(#FFF, $footer-bgcolor, 70%)
 
 // 小于桌面布局：桌面里的左栏占满宽度，内部内容平均分栏
 +below(rupture.desktop-cutoff)
-  .footer-navi__section
+  .footer__navi__section
     col(1/($section-count - 2))
     margin-bottom: 20px
 
 // 不能一行展示所有栏：只显示两栏
 +below($footer-section-width * ($section-count - 2))
-  .footer-navi__section
+  .footer__navi__section
     col(1/2, cycle: 2)
 
 // 两栏也无法显示：只显示一栏
 +below($footer-section-width * 2)
-  .footer-navi__section
+  .footer__navi__section
     stack()
     text-align: center
 
-.footer-navi__section-title
+.footer__navi__section__title
   font-size: 18px
   color: #FFF
   border-left: $footer-section-ribbon solid $primary-color
   padding-left: $footer-section-gutter - $footer-section-ribbon
   margin-bottom: 10px
 
-.footer-navi__section__item
+.footer__navi__section__item
   font-size: 16px
   margin-left: $footer-section-gutter
   line-height: 30px
 
 for $section-name, $section-color in $section-colors
-  .footer-navi__section__menu-{$section-name} .footer-navi__section-title
+  .footer__navi__section__{$section-name} .footer__navi__section__title
     border-color: $section-color
 
 // 一栏显示时，左侧 ribbon 显示到上侧
 +below($footer-section-width * 2)
-  .footer-navi__section-title
+  .footer__navi__section__title
     padding-left: 0
     padding-top: 5px
     border-left: 0
     border-top: 4px solid $primary-color
   
-  .footer-navi__section__item
+  .footer__navi__section__item
     margin-left: 0

@@ -1,43 +1,13 @@
 <div id="page">
 
-  <header class="header" id="header" role="banner">
-
-    <?php if ($logo): ?>
-      <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" class="header__logo" id="logo"><img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" class="header__logo-image" /></a>
-    <?php endif; ?>
-
-    <?php if ($site_name || $site_slogan): ?>
-      <div class="header__name-and-slogan" id="name-and-slogan">
-        <?php if ($site_name): ?>
-          <h1 class="header__site-name" id="site-name">
-            <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" class="header__site-link" rel="home"><span><?php print $site_name; ?></span></a>
-          </h1>
-        <?php endif; ?>
-
-        <?php if ($site_slogan): ?>
-          <div class="header__site-slogan" id="site-slogan"><?php print $site_slogan; ?></div>
-        <?php endif; ?>
+  <header class="header">
+    <div class="header__background"></div>
+    <section class="content-container clearfix">
+      <div class="header__logo-container">
+        <a href="<?php print $front_page ?>" class="header__logo"><img src="<?php print sse_asset_path() ?>/img/logo.png" alt="<?php print t('Home') ?>"/></a>
       </div>
-    <?php endif; ?>
-
-    <?php if ($secondary_menu): ?>
-      <nav class="header__secondary-menu" id="secondary-menu" role="navigation">
-        <?php print theme('links__system_secondary_menu', array(
-          'links' => $secondary_menu,
-          'attributes' => array(
-            'class' => array('links', 'inline', 'clearfix'),
-          ),
-          'heading' => array(
-            'text' => $secondary_menu_heading,
-            'level' => 'h2',
-            'class' => array('element-invisible'),
-          ),
-        )); ?>
-      </nav>
-    <?php endif; ?>
-
-    <?php print render($page['header']); ?>
-
+      <?php print render($page['header']); ?>
+    </section>
   </header>
 
   <div id="main">
@@ -105,13 +75,12 @@
 
   <footer class="footer">
     <section class="content-container clearfix">
-      <div class="footer-navi clearfix"><?php print sse_footer_navigation_output(); ?></div>
-      <div class="footer-info">
+      <div class="footer__navi clearfix"><?php print sse_footer_navigation_output(); ?></div>
+      <div class="footer__info">
         <?php $footer_block = module_invoke('panels_mini', 'block_view', 'footer_info'); print $footer_block['content']; ?>
       </div>
     </section>
   </footer>
-
 </div>
 
 <?php print render($page['bottom']); ?>

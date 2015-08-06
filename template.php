@@ -7,6 +7,15 @@
  * @see https://drupal.org/node/1728096
  */
 
+function sse_asset_path()
+{
+  static $path = null;
+  if ($path === null) {
+    $path = base_path().path_to_theme();
+  }
+  return $path;
+}
+
 /**
  * 获取不同区块的主题颜色
  */
@@ -31,6 +40,26 @@ function sse_get_section_color($key)
   } else {
     return $sse_section_colors['default'];
   }
+}
+
+/**
+ * 获取当前所在区块
+ */
+function sse_get_current_section()
+{
+  static $section = null;
+  if ($section === null) {
+    $route = menu_get_active_trail();
+    if (count($route) >= 2) {
+      // $route[0] 是首页
+      $entity = menu_fields_load_by_mlid($route[1]['mlid']);
+      $menu_id = $entity->wrapper()->field_id->value();
+      $section = $menu_id;
+    } else {
+      $section = 'default';
+    }
+  }
+  return $section;
 }
 
 /**
@@ -66,17 +95,19 @@ function sse_get_navigations($extra = false)
   return $result;
 }
 
-
+/**
+ * 输出 footer 导航
+ */
 function sse_footer_navigation_output()
 {
   $output = '';
   $navi = sse_get_navigations(false);
   foreach ($navi as &$section) {
-    $output .= '<div class="footer-navi__section footer-navi__section__'.$section['id'].'">';
-    $output .= '<h1 class="footer-navi__section-title">'.$section['text'].'</h1>';
-    $output .= '<ul class="footer-navi__section-items">';
+    $output .= '<div class="footer__navi__section footer__navi__section__'.$section['id'].'">';
+    $output .= '<h1 class="footer__navi__section__title">'.$section['text'].'</h1>';
+    $output .= '<ul class="footer__navi__section__items">';
     foreach ($section['items'] as &$item) {
-      $output .= '<li class="footer-navi__section__item"><a href="'.$item['href'].'" target="_self">'.$item['text'].'</a></li>';
+      $output .= '<li class="footer__navi__section__item"><a href="'.$item['href'].'" target="_self">'.$item['text'].'</a></li>';
     }
     unset($item);
     $output .= '</ul></div>';
@@ -85,7 +116,9 @@ function sse_footer_navigation_output()
   return $output;
 }
 
-
+/**
+ * 渲染 footer 的语言项时增加一项「开发人员」
+ */
 function sse_links__locale_block(&$vars) {
   $vars['links']['contributors'] = [
     'href' => '<front>',
