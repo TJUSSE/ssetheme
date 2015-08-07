@@ -227,6 +227,11 @@ function sse_preprocess_html(&$variables, $hook) {
 }
 // */
 
+function sse_html_head_alter(&$head_elements)
+{
+  unset($head_elements['system_meta_generator']);
+}
+
 /**
  * Override or insert variables into the page templates.
  *
