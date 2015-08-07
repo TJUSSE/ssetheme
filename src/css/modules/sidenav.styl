@@ -55,3 +55,24 @@ for $section-name, $section-color in $section-colors
   .sidenav--section-{$section-name} .sidenav__edge
     // 保留一部分距离来消除锯齿
     background: linear-gradient(150deg, darken($section-color, 30%) 34%, transparent 36%)
+
+// 桌面以下，调整一下大小
++below(rupture.desktop-cutoff)
+  .sidenav__edge
+    top: 65px
+  
+  .sidenav__title__link
+    line-height: 65px
+    font-size: 20px
+  
+  .sidenav__list
+    padding: 10px 0
+  
+  .sidenav__item__link
+    padding-top: 10px
+    padding-bottom: 10px
+
+// 手机：隐藏
++below(780px)
+  .sidenav
+    display: none

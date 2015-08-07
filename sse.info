@@ -66,7 +66,8 @@ stylesheets[all][] = css/style.css
 
 ; Optionally add some JavaScripts to your theme.
 
-;scripts[] = js/script.js
+scripts[] = js/vendor/pangu-2.5.7.js
+scripts[] = js/sse.js
 
 
 
@@ -86,12 +87,7 @@ stylesheets[all][] = css/style.css
 ;   <?php print $header_top; ?>
 
 regions[header]         = Header
-regions[navigation]     = Navigation bar
-regions[highlighted]    = Highlighted
-regions[help]           = Help
 regions[content]        = Content
-regions[sidebar_first]  = First sidebar
-regions[sidebar_second] = Second sidebar
 regions[footer]         = Footer
 regions[bottom]         = Page bottom
 
@@ -101,7 +97,6 @@ regions[bottom]         = Page bottom
 
 regions[page_top]       = Page top
 regions[page_bottom]    = Page bottom
-
 
 
 ; Various page elements output by the theme can be toggled on and off. The

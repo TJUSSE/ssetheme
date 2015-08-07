@@ -206,15 +206,14 @@ figcaption
 .textwrap-table
   table-layout: fixed
 
-
 /* 提供 serif 版本的字体设置: iOS 下中文自动 fallback 到 sans-serif */
 /*.serif
   font-family: Palatino, Optima, Georgia, serif
 */
 
 /* 保证块/段落之间的空白隔行 */
-.typo p, .typo pre, .typo ul, .typo ol, .typo dl, .typo form, .typo hr, .typo table,
-.typo-p, .typo-pre, .typo-ul, .typo-ol, .typo-dl, .typo-form, .typo-hr, .typo-table, blockquote
+.typo p, .typo pre, .typo li, .typo ul, .typo ol, .typo dl, .typo form, .typo hr, .typo table,
+.typo-p, .typo-pre, .typo-li, .typo-ul, .typo-ol, .typo-dl, .typo-form, .typo-hr, .typo-table, blockquote
   margin-bottom: 1.2em
 
 
@@ -237,7 +236,7 @@ h1, h2, h3, h4, h5, h6
 
 
 .typo h1, .typo-h1
-  font-size: 2em
+  font-size: 2.2em
 
 
 .typo h2, .typo-h2
@@ -259,7 +258,7 @@ h1, h2, h3, h4, h5, h6
 /* 在文章中，应该还原 ul 和 ol 的样式 */
 .typo ul, .typo-ul
   margin-left: 1.3em
-  list-style: disc
+  list-style: square
 
 
 .typo ol, .typo-ol

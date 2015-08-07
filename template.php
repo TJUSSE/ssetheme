@@ -151,8 +151,12 @@ function sse_links__locale_block(&$vars)
  */
 function sse_has_sidenav()
 {
-  $route = menu_get_active_trail();
-  return (count($route) >= 2 && $route[1]['menu_name'] === 'menu-sse-navigation-menu');
+  static $has_side_nav = null;
+  if ($has_side_nav === null) {
+    $route = menu_get_active_trail();
+    $has_side_nav = (count($route) >= 2 && $route[1]['menu_name'] === 'menu-sse-navigation-menu');
+  }
+  return $has_side_nav;
 }
 
 /**
@@ -160,6 +164,9 @@ function sse_has_sidenav()
  */
 function sse_sidenav_output()
 {
+  if (!sse_has_sidenav()) {
+    return '';
+  }
   $route = menu_get_active_trail();
   $parent = $route[1];
   $param = [
@@ -173,7 +180,7 @@ function sse_sidenav_output()
   $entity = menu_fields_load_by_mlid($parent['mlid']);
   $menu_id = $entity->wrapper()->field_id->value();
   $output = '<nav class="sidenav sidenav--section-'.$menu_id.'">';
-  $output .= '<h1 class="sidenav__title"><a href="'.$parent['title_link'].'" target="_self" class="sidenav__title__link">'. $parent['title'] .'</a></h1>';
+  $output .= '<h1 class="sidenav__title"><a href="'.$parent['link_path'].'" target="_self" class="sidenav__title__link">'. $parent['title'] .'</a></h1>';
   $output .= '<div class="sidenav__edge"></div><ul class="sidenav__list">';
   foreach ($items as $item) {
     $output .= '<li class="sidenav__item'. ((count($route) >= 3 && $item['link']['mlid'] === $route[2]['mlid']) ? ' sidenav__item--active' : '') .'">';

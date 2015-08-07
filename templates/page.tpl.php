@@ -1,96 +1,45 @@
-<div id="page">
-
-  <header class="header">
-    <div class="header__background"></div>
-    <div class="content-container clearfix">
-      <section class="header__logo-container">
-        <a href="<?php print $front_page ?>" class="header__logo"><img src="<?php print sse_asset_path() ?>/img/logo.png" alt="<?php print t('Home') ?>"/></a>
-      </section>
-      <?php print render($page['header']); ?>
+  <section class="page-row">
+    <header class="header">
+      <div class="header__background"></div>
+      <div class="content-container clearfix">
+        <section class="header__logo-container">
+          <a href="<?php print $front_page ?>" class="header__logo"><img src="<?php print sse_asset_path() ?>/img/logo.png" alt="<?php print t('Home') ?>"/></a>
+        </section>
+        <?php print render($page['header']); ?>
+      </div>
+    </header>
+  </section>
+  
+  <section class="page-row page-row-expanded">
+    <div class="content<?php if (sse_has_sidenav()) print ' content-has-sidenav'; ?>">
+      <div class="content-container clearfix">
+        <?php if (sse_has_sidenav()) { print sse_sidenav_output(); } ?>
+        <section class="main-content">
+          <?php sse_get_breadcrumb(); ?>
+          <a id="main-content"></a>
+          <div class="typo">
+            <?php print render($title_prefix); ?>
+            <?php if ($title): ?>
+              <h1 class="page__title title" id="page-title"><?php print $title; ?></h1>
+            <?php endif; ?>
+            <?php print render($title_suffix); ?>
+            <?php print $messages; ?>
+            <?php print render($page['content']); ?>
+          </div>
+        </section>
+      </div>
     </div>
-  </header>
+  </section>
 
-  <div class="content<?php if (sse_has_sidenav()) print ' content-has-sidenav'; ?>">
-    <div class="content-container clearfix">
-      <?php print sse_sidenav_output() ?>
-      <section class="main-content">
-        <?php sse_get_breadcrumb(); ?>
-        <?php print render($page['content']); ?>
-      </section>
-    </div>
-  </div>
-<!--
-  <div id="main">
-
-    <div id="content" class="column" role="main">
-      <?php print render($page['highlighted']); ?>
-      <?php print $breadcrumb; ?>
-      <a id="main-content"></a>
-      <?php print render($title_prefix); ?>
-      <?php if ($title): ?>
-        <h1 class="page__title title" id="page-title"><?php print $title; ?></h1>
-      <?php endif; ?>
-      <?php print render($title_suffix); ?>
-      <?php print $messages; ?>
-      <?php print render($tabs); ?>
-      <?php print render($page['help']); ?>
-      <?php if ($action_links): ?>
-        <ul class="action-links"><?php print render($action_links); ?></ul>
-      <?php endif; ?>
-      <?php print render($page['content']); ?>
-      <?php print $feed_icons; ?>
-    </div>
-
-    <div id="navigation">
-
-      <?php if ($main_menu): ?>
-        <nav id="main-menu" role="navigation" tabindex="-1">
-          <?php
-          // This code snippet is hard to modify. We recommend turning off the
-          // "Main menu" on your sub-theme's settings form, deleting this PHP
-          // code block, and, instead, using the "Menu block" module.
-          // @see https://drupal.org/project/menu_block
-          print theme('links__system_main_menu', array(
-            'links' => $main_menu,
-            'attributes' => array(
-              'class' => array('links', 'inline', 'clearfix'),
-            ),
-            'heading' => array(
-              'text' => t('Main menu'),
-              'level' => 'h2',
-              'class' => array('element-invisible'),
-            ),
-          )); ?>
-        </nav>
-      <?php endif; ?>
-
-      <?php print render($page['navigation']); ?>
-
-    </div>
-
-    <?php
-      // Render the sidebars to see if there's anything in them.
-      $sidebar_first  = render($page['sidebar_first']);
-      $sidebar_second = render($page['sidebar_second']);
-    ?>
-
-    <?php if ($sidebar_first || $sidebar_second): ?>
-      <aside class="sidebars">
-        <?php print $sidebar_first; ?>
-        <?php print $sidebar_second; ?>
-      </aside>
-    <?php endif; ?>
-
-  </div>
--->
-  <footer class="footer">
-    <div class="content-container clearfix">
-      <section class="footer__navi clearfix"><?php print sse_footer_navigation_output(); ?></section>
-      <section class="footer__info">
-        <?php $footer_block = module_invoke('panels_mini', 'block_view', 'footer_info'); print $footer_block['content']; ?>
-      </section>
-    </div>
-  </footer>
-</div>
+  <section class="page-row">
+    <footer class="footer">
+      <div class="content-container clearfix">
+        <section class="footer__navi clearfix"><?php print sse_footer_navigation_output(); ?></section>
+        <section class="footer__info">
+          <?php $footer_block = module_invoke('panels_mini', 'block_view', 'footer_info'); print $footer_block['content']; ?>
+        </section>
+      </div>
+    </footer>
+  </section>
 
 <?php print render($page['bottom']); ?>
