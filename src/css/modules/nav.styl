@@ -1,0 +1,126 @@
+$inner-menu-bgcolor = #222
+
+// 首页和内页，顶级和次级菜单项都是白色且无下划线
+.nav__l
+  display: block
+  &, &:visited, &:active, &:hover
+    color: #FFF
+    text-decoration: none
+
+// ============================================
+// 对于内页
+
+$nf-menu-width = unit(floor(1000 / $section-count), 'px')
+
+// 桌面时，菜单项宽度固定为 floor(1000px / N)
+.nav__i--nf--lv0
+  float: left
+  width: $nf-menu-width
+
+// 桌面 1250px 以上时候，总宽度 1200px，菜单项有 margin-right
++above(1250px)
+  .nav__i--nf--lv0
+    margin-right: ((1200px - $nf-menu-width * $section-count) / ($section-count - 1))
+  
+  .nav__i--nf--lv0:last-child
+    margin-right: 0
+
+// 顶级菜单项居中
+.nav__i--nf--lv0
+  line-height: 50px
+  position: relative
+  text-align: center
+
+// 顶级菜单条纹
+.nav__i--nf--lv0
+  &::after
+    position: absolute
+    left: 0
+    top: 0
+    transform: translateY(50px)
+    width: 100%
+    height: 5px
+    content: ''
+    opacity: 0
+    // 彩条移动动画
+    transition: transform .2s, opacity .2s
+    // 鼠标移入时，动画是 easeOut，移出时，动画是 easeIn
+    transition-timing-function: easeInCubic
+
+  &:hover::after
+    opacity: 1
+    transform: translateY(-5px)
+    // 鼠标移入时，动画是 easeOut，移出时，动画是 easeIn
+    transition-timing-function: easeOutCubic
+  
+  &.nav__i--active::after
+    transition-timing-function: easeOutCubic
+    opacity: 1
+
+for $section-name, $section-color in $section-colors
+  .nav__i--section--{$section-name}::after
+    background-color: $section-color
+
+// 顶级菜单背景
+.nav__i--nf--lv0
+  background: transparent
+  // 背景颜色动画
+  transition: background .2s
+  transition-timing-function: easeInCubic
+
+  &:hover
+    background: $inner-menu-bgcolor
+    transition-timing-function: easeOutCubic
+
+// 次级菜单隐藏，鼠标移入后显示
+.nav__sublist--nf--lv0
+  position: absolute
+  left: 0
+  top: 50px
+  overflow: hidden
+  transition: visibility 0s linear 0.2s
+  visibility: hidden
+
+.nav__i--nf--lv0:hover .nav__sublist--nf--lv0
+  visibility: visible
+  transition-delay: 0s
+
+// 次级菜单
+.nav__list--nf--lv1
+  background: $inner-menu-bgcolor
+  line-height: 40px
+  padding: 10px 0
+  width: auto
+  font-size: 0.9em
+  transform: translateY(-30px)
+  opacity: 0
+  text-align: left
+  // 菜单下滑动画
+  transition: transform .2s, opacity .2s 
+  // 鼠标移入时，动画是 easeOut，移出时，动画是 easeIn
+  transition-timing-function: easeInCubic
+
+.nav__i--nf--lv0:hover .nav__list--nf--lv1
+  transform: translateY(0)
+  opacity: 1
+  // 鼠标移入时，动画是 easeOut，移出时，动画是 easeIn
+  transition-timing-function: easeOutCubic
+
+// 次级菜单项
+.nav__l--nf--lv1
+  padding-left: 40px
+  border-left: 5px solid $inner-menu-bgcolor
+  padding-right: 45px
+  white-space: nowrap
+  transition: border-color .2s, background-color .2s
+  transition-timing-function: linear
+  
+  // 鼠标移入时立即显示，移出时有动画
+  &:hover
+    transition: none
+
+// 次级菜单项也有彩条
+for $section-name, $section-color in $section-colors
+  .nav__i--section--{$section-name} .nav__l--nf--lv1:hover
+    border-color: $section-color
+    background-color: mix($section-color, $inner-menu-bgcolor, 10%)

@@ -223,6 +223,9 @@ h1, h2, h3, h4, h5, h6
   color: $header-color
   line-height: 1.35
 
+.typo h2, .typo h3
+  color: #717171  
+
 .wf-active
   h1, h2, h3, h4, h5, h6
     font-family: $header-font-family-webfont
@@ -281,7 +284,6 @@ h1, h2, h3, h4, h5, h6
   padding: 0.5em 1em
   color: #666
 
-
 .typo table th, .typo-table th
   background: #fbfbfb
 
@@ -293,6 +295,16 @@ h1, h2, h3, h4, h5, h6
 .typo table caption
   border-bottom: none
 
+
+// 人员列表定制样式
+.typo .table--peoplelist
+  width: 100%
+  max-width: 500px
+  
+  th, td
+    border: 0
+    padding-left: 0
+    font-size: 0.9em
 
 /* 去除 webkit 中 input 和 textarea 的默认样式  */
 .typo-input, .typo-textarea
