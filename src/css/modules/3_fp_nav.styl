@@ -1,0 +1,59 @@
+.fp__header__nav
+  margin-top: 40px
+
+.nav__i--f--lv0
+  float: left
+  
+.nav__l--f--lv0
+  line-height: 65px
+  padding: 0 30px
+  font-size: 1.2em
+
+.nav__i--f--lv0:hover
+  background: $inner-menu-bgcolor
+
+// 顶级子菜单
+.nav__sublist--f--lv0
+  top: 65px
+  min-width: 100%
+
+// 第一级子菜单
+.nav__sublist--f--lv1
+  left: 100%
+  top: 0
+
+// 第一级菜单和顶级菜单项等宽
+.nav__list--f--lv1
+  line-height: 40px
+  padding: 0
+  width: 100%
+
+// 第一级菜单项边距
+.nav__l--f--lv1
+  padding-left: 25px
+  padding-right: 0
+
+// 图标
+.nav__icon
+  position: absolute
+  right: 20px
+  top: 0
+  color: #DDD
+
+.nav__l--f--lv1:hover .nav__icon
+  color: #FFF
+
+// 第一级子菜单从左侧滑出
+.nav__list--lv2
+  transform: translateX(-30px)
+
+// 第二级菜单项边距
+.nav__l--f--lv2
+  padding-left: 20px
+  padding-right: 40px
+
+// 首页菜单鼠标不移入也有彩条
+for $section-name, $section-color in $section-colors
+  .nav__i--section--{$section-name} .nav__l--f--lv1,
+  .nav__i--section--{$section-name}.nav__i--f--lv1 .nav__l--f--lv2
+    border-color: mix($section-color, $inner-menu-bgcolor, 80%)

@@ -25,8 +25,8 @@
 <body class="<?php print $classes; ?> body-section-<?php print sse_get_current_section() ?>" <?php print $attributes;?>>
   <?php print $page_top; ?>
   <?php print $page; ?>
-  <?php print $page_bottom; ?>
   <script src="<?php print sse_asset_path() ?>/js/vendor/webfont-1.5.10.js" async="true"></script>
   <?php print $scripts; ?>
+  <?php print $page_bottom; ?>
 </body>
 </html>

@@ -28,13 +28,16 @@ $nf-menu-width = unit(floor(1000 / $section-count), 'px')
 // 顶级菜单项居中
 .nav__i--nf--lv0
   line-height: 50px
-  position: relative
   text-align: center
+
+.nav__i--lv0, .nav__i--lv1
+  position: relative
 
 // 顶级菜单条纹
 .nav__i--nf--lv0
   &::after
     position: absolute
+    z-index: 999
     left: 0
     top: 0
     transform: translateY(50px)
@@ -61,38 +64,52 @@ for $section-name, $section-color in $section-colors
   .nav__i--section--{$section-name}::after
     background-color: $section-color
 
-// 顶级菜单背景
-.nav__i--nf--lv0
+
+// 顶级菜单背景（适用于首页和内页）
+// ===================================
+.nav__i--lv0
   background: transparent
   // 背景颜色动画
   transition: background .2s
   transition-timing-function: easeInCubic
 
   &:hover
-    background: $inner-menu-bgcolor
     transition-timing-function: easeOutCubic
 
-// 次级菜单隐藏，鼠标移入后显示
-.nav__sublist--nf--lv0
+// 内页样式
+.nav__i--nf--lv0:hover
+  background: $inner-menu-bgcolor
+// ===================================
+
+
+
+// 次级菜单隐藏，鼠标移入后显示（适用于首页和内页）
+// ===================================
+.nav__sublist--lv0, .nav__sublist--lv1
   position: absolute
-  left: 0
-  top: 50px
-  overflow: hidden
+  z-index: 100
   transition: visibility 0s linear 0.2s
   visibility: hidden
 
-.nav__i--nf--lv0:hover .nav__sublist--nf--lv0
+.nav__i--lv0:hover .nav__sublist--lv0, .nav__i--lv1:hover .nav__sublist--lv1
   visibility: visible
   transition-delay: 0s
 
-// 次级菜单
-.nav__list--nf--lv1
+// 内页样式
+.nav__sublist--nf--lv0
+  left: 0
+  overflow: hidden
+  top: 50px
+// ===================================
+
+
+
+// 次级菜单（适用于首页和内页）
+// ===================================
+.nav__list--lv1, .nav__list--lv2
   background: $inner-menu-bgcolor
-  line-height: 40px
-  padding: 10px 0
   width: auto
-  font-size: 0.9em
-  transform: translateY(-30px)
+  font-size: 15px
   opacity: 0
   text-align: left
   // 菜单下滑动画
@@ -100,17 +117,27 @@ for $section-name, $section-color in $section-colors
   // 鼠标移入时，动画是 easeOut，移出时，动画是 easeIn
   transition-timing-function: easeInCubic
 
-.nav__i--nf--lv0:hover .nav__list--nf--lv1
-  transform: translateY(0)
+.nav__list--lv1
+  transform: translateY(-30px)
+
+.nav__i--lv0:hover .nav__list--lv1, .nav__i--lv1:hover .nav__list--lv2
+  transform: translateX(0) translateY(0)
   opacity: 1
   // 鼠标移入时，动画是 easeOut，移出时，动画是 easeIn
   transition-timing-function: easeOutCubic
 
+// 内页样式
+.nav__list--nf--lv1
+  line-height: 40px
+  padding: 10px 0
+// ===================================
+
+
+
 // 次级菜单项
-.nav__l--nf--lv1
-  padding-left: 40px
+// ===================================
+.nav__l--lv1, .nav__l--lv2
   border-left: 5px solid $inner-menu-bgcolor
-  padding-right: 45px
   white-space: nowrap
   transition: border-color .2s, background-color .2s
   transition-timing-function: linear
@@ -119,8 +146,19 @@ for $section-name, $section-color in $section-colors
   &:hover
     transition: none
 
-// 次级菜单项也有彩条
+// 内页次级菜单项也有彩条
 for $section-name, $section-color in $section-colors
-  .nav__i--section--{$section-name} .nav__l--nf--lv1:hover
+  // lv1父级
+  .nav__i--section--{$section-name}.nav__i--lv1:hover .nav__l--lv1,
+  .nav__i--section--{$section-name} .nav__i--lv1:hover .nav__l--lv1,
+  // lv2父级
+  .nav__i--section--{$section-name} .nav__l--lv2:hover
     border-color: $section-color
-    background-color: mix($section-color, $inner-menu-bgcolor, 10%)
+    background-color: mix($section-color, $inner-menu-bgcolor, 20%)
+  
+// 内页样式
+.nav__l--nf--lv1
+  padding-left: 40px
+  padding-right: 45px
+
+// ===================================

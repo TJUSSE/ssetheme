@@ -86,7 +86,6 @@ scripts[] = js/sse.js
 ; And you'll use this variable in maintenance-page.tpl.php:
 ;   <?php print $header_top; ?>
 
-regions[header]         = Header
 regions[content]        = Content
 regions[footer]         = Footer
 regions[bottom]         = Page bottom

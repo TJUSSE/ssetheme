@@ -255,7 +255,7 @@ function sse_navigation_output_tree(&$tree, $level, $is_frontpage = false)
   $level_symbol = 'lv'.$level;
 
   $append_class = function($base) use ($front_symbol, $level_symbol) {
-    return "$base--$front_symbol--$level_symbol";
+    return "$base--$front_symbol--$level_symbol $base--$level_symbol";
   };
 
   $output = '<ul class="'.$append_class('nav__list').'">'."\n";
@@ -270,14 +270,13 @@ function sse_navigation_output_tree(&$tree, $level, $is_frontpage = false)
     }
     $output .= '"><a class="nav__l '.$append_class('nav__l').'" href="'.url($item['href']).'" target="_self">'.check_plain($item['title']);
     // 如果是顶级菜单，则有子项的时候，显示 v 并且紧跟文字
+    // 如果不是顶级菜单，则有子项的时候，显示 > 并且单独排列
     if ($has_subitems && $level === 0) {
       $output .= '<i class="icon-expand_more"></i>';
-    }
-    $output .= '</a>';
-    // 如果不是顶级菜单，则有子项的时候，显示 > 并且单独排列
-    if ($has_subitems && $level > 0) {
+    } else if ($has_subitems && $level > 0) {
       $output .= '<div class="nav__icon"><i class="icon-chevron_right"></i></div>';
     }
+    $output .= '</a>';
     // 增加子菜单
     if ($has_subitems) {
       $output .= '<div class="'.$append_class('nav__sublist').'">'.sse_navigation_output_tree($item['items'], $level + 1, $is_frontpage).'</div>';
