@@ -40,7 +40,7 @@ gulp.task('js', function () {
 });
 
 gulp.task('css', function () {
-  return gulp.src(['src/css/style.styl', 'src/css/webfont.styl'])
+  return gulp.src(['src/css/style.styl', 'src/css/typography.styl', 'src/css/webfont.styl'])
     .pipe(logger())
     .pipe(plumber())
     .pipe(sourcemaps.init())
