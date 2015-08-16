@@ -7,9 +7,9 @@
  * @see https://drupal.org/node/1728096
  */
 
-const sse_menu_navigation = 'menu-sse-navigation-menu';
-const sse_menu_footer = 'menu-sse-footer-menu';
-const sse_menu_main = 'menu-sse-main-menu';
+const sse_menu_navigation = 'menu-sse-navigation';
+const sse_menu_footer = 'menu-sse-footer';
+const sse_menu_main = 'menu-sse-main';
 
 /**
  * 返回该主题基目录的 URI
@@ -61,7 +61,7 @@ function sse_get_current_section()
       // $route[0] 是首页
       if (isset($route[1]['menu_name']) && $route[1]['menu_name'] === sse_menu_navigation) {
         $entity = menu_fields_load_by_mlid($route[1]['mlid'])->wrapper();
-        $menu_id = $entity->field_id->value();
+        $menu_id = $entity->field_navigation_menu_id->value();
         $section = $menu_id;
       } else {
         $section = 'default';
@@ -111,8 +111,8 @@ function sse_process_menu_tree_with_id(&$tree)
   $entity = menu_fields_load_by_mlid($tree['link']['mlid']);
   if ($entity !== null) {
     $entity = $entity->wrapper();
-    if (isset($entity->field_id)) {
-      $ret['id'] = $entity->field_id->value();
+    if (isset($entity->field_navigation_menu_id)) {
+      $ret['id'] = $entity->field_navigation_menu_id->value();
     }
   }
 
@@ -122,10 +122,10 @@ function sse_process_menu_tree_with_id(&$tree)
 /**
  * 获取包含 ID 字段的菜单树
  */
-function sse_get_menu_tree_with_id($menu_name)
+function sse_get_menu_tree_with_id($menu_name, $depth = NULL)
 {
   $result = [];
-  $menu_tree = menu_tree_all_data($menu_name);
+  $menu_tree = menu_tree_all_data($menu_name, NULL, $depth);
   foreach ($menu_tree as &$tree) {
     if ($tree['link']['hidden'] === true) {
       continue;
@@ -178,29 +178,29 @@ function sse_get_navigation_main($is_frontpage = false)
       continue;
     }
     $entity = $entity->wrapper();
-    if (isset($entity->field_id)) {
-      $curitem['id'] = $entity->field_id->value();
+    if (isset($entity->field_navigation_menu_id)) {
+      $curitem['id'] = $entity->field_navigation_menu_id->value();
     }
-    if (!isset($entity->field_type)) {
+    if (!isset($entity->field_main_menu_reference_type)) {
       $result[] = $curitem;
       continue;
     }
-    $ref_type = $entity->field_type->value();
+    $ref_type = $entity->field_main_menu_reference_type->value();
     if ($ref_type === 'none') {
       // 无引用：没有子项
       $result[] = $curitem;
       continue;
     }
     // 有引用
-    if (!isset($entity->field_from)) {
+    if (!isset($entity->field_main_menu_reference_target)) {
       $result[] = $curitem;
       continue;
     }
-    $ref_target = $entity->field_from->value();
+    $ref_target = $entity->field_main_menu_reference_target->value();
 
     if ($ref_type === 'menu') {
-      // 菜单引用
-      $subitems = sse_get_menu_tree_with_id($ref_target);
+      // 菜单引用，省略二级以上菜单
+      $subitems = sse_get_menu_tree_with_id($ref_target, 2);
     } else if ($ref_type === 'taxonomy') {
       $subitems = sse_get_taxonomy_tree($ref_target);
     } else {
@@ -209,7 +209,7 @@ function sse_get_navigation_main($is_frontpage = false)
     }
 
     // 是否以子项代替当前项
-    if ($entity->field_expand->value() === true && $is_frontpage === false) {
+    if ($entity->field_main_menu_expand->value() === true && $is_frontpage === false) {
       foreach ($subitems as $subitem) {
         $result[] = $subitem;
       }
@@ -350,7 +350,7 @@ function sse_sidenav_output()
   ];
   $items = menu_build_tree($parent['menu_name'], $param);
   $entity = menu_fields_load_by_mlid($parent['mlid'])->wrapper();
-  $menu_id = $entity->field_id->value();
+  $menu_id = $entity->field_navigation_menu_id->value();
   $output = '<nav class="sidenav sidenav--section-'.check_plain($menu_id).'">';
   $output .= '<h1 class="sidenav__title"><a href="'.url($parent['href']).'" target="_self" class="sidenav__title__link">'. check_plain($parent['title']) .'</a></h1>';
   $output .= '<div class="sidenav__edge"></div><ul class="sidenav__list">';
