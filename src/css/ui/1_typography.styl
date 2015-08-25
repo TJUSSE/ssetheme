@@ -217,8 +217,28 @@ h1, h2, h3, h4, h5, h6
   line-height: 1.35
 
 .typo, .cke_editable
-  h2, h3
+  h2, h3, h4
     color: #717171
+
+::selection
+  background: #222
+  color: #FFF
+
+// 不同 section 具有不同的 h2 颜色和不同的超链接颜色
+for $section-name, $section-color in $section-colors
+  .body-section-{$section-name}
+    .typo
+      h2
+        color: darken($section-color, 30%)
+      a
+        color: $text-color
+        border-bottom-color: @color
+        &:visited, &:active
+          color: $text-color
+          border-bottom-color: @color
+        &:hover
+          color: darken($section-color, 20%)
+          border-bottom-color: @color
 
 .wf-active
   h1, h2, h3, h4, h5, h6
@@ -248,18 +268,12 @@ h1, h2, h3, h4, h5, h6
 .typo h3,
 .cke_editable h3,
 .typo-h3
-  font-size: 1.6em
+  font-size: 1.4em
 
 
 .typo h4,
 .cke_editable h4,
 .typo-h4
-  font-size: 1.4em
-
-
-.typo h5, .typo h6,
-.cke_editable h5, .cke_editable h6,
-.typo-h5, .typo-h6
   font-size: 1.2em
 
 
@@ -281,7 +295,8 @@ h1, h2, h3, h4, h5, h6
 .typo li ul, .typo li ol,
 .cke_editable li ul, .cke_editable li ol,
 .typo-ul ul, .typo-ul ol, .typo-ol ul, .typo-ol ol
-  margin-bottom: 0.8em
+  margin-top: 1.2em
+  margin-bottom: 1.2em
   margin-left: 2em
 
 
@@ -318,10 +333,16 @@ h1, h2, h3, h4, h5, h6
 
 // 人员列表定制样式
 .typo, .cke_editable
-  .table--peoplelist
+  .table--non-border-list
     width: 100%
     max-width: 500px
     th, td
+      border: 0
+      padding-left: 0
+      
+  .table--peoplelist
+    th, td
+      width: 140px
       border: 0
       padding-left: 0
 
