@@ -12,6 +12,38 @@ const sse_menu_footer = 'menu-sse-footer';
 const sse_menu_main = 'menu-sse-main';
 
 /**
+ * 这里指定的是 <meta name="theme-color"> 中的颜色，该属性可以指定 Android Chrome 浏览器中标题栏颜色
+ * @var array
+ */
+global $sse_section_colors;
+$sse_section_colors = [
+  'default' =>   '#53A0D4',
+  'overview' =>  '#9FC1E3',
+  'admission' => '#E3B48D',
+  'education' => '#E1A6E3',
+  'research' =>  '#F8DA89',
+  'activity' =>  '#C9D36F',
+  'news' =>      '#DEA1A1',
+  'notice' =>    '#A4CBCC',
+];
+
+global $sse_node_type_parent_menu;
+$sse_node_type_parent_menu = [
+  'club_content' => ['activity', 'club'],
+  'chronology_content' => ['overview', 'chronology'],
+  'teacher_content' => ['education', 'faculty'],
+  'research_team_content' => ['research', 'team'],
+  'excellent_curriculum_content' => ['education', 'achievements'],
+];
+
+global $sse_admission_type_parent_menu;
+$sse_admission_type_parent_menu = [
+  'undergraduate' => ['admission', 'undergraduate'],
+  'master' => ['admission', 'master'],
+  'doctoral' => ['admission', 'doctoral'],
+];
+
+/**
  * 返回该主题基目录的 URI
  */
 function sse_asset_path()
@@ -28,25 +60,74 @@ function sse_asset_path()
  */
 function sse_get_section_color($key)
 {
-  /**
-   * 这里指定的是 <meta name="theme-color"> 中的颜色，该属性可以指定 Android Chrome 浏览器中标题栏颜色
-   * @var array
-   */
-  static $sse_section_colors = [
-    'default' =>   '#53A0D4',
-    'overview' =>  '#9FC1E3',
-    'admission' => '#E3B48D',
-    'education' => '#E1A6E3',
-    'research' =>  '#F8DA89',
-    'activity' =>  '#C9D36F',
-    'news' =>      '#DEA1A1',
-    'notice' =>    '#A4CBCC',
-  ];
+  global $sse_section_colors;
   if (isset($sse_section_colors[$key])) {
     return $sse_section_colors[$key];
   } else {
     return $sse_section_colors['default'];
   }
+}
+
+function sse_transform_trail(&$trail, $node, $navi_menu_path)
+{
+  $navi_menu = sse_get_menu_tree_with_id(sse_menu_navigation, 2, true);
+  foreach ($navi_menu as &$top_menu) {
+    if (isset($top_menu['id']) && $top_menu['id'] === $navi_menu_path[0]) {
+      foreach ($top_menu['items'] as &$item) {
+        if (isset($item['subid']) && $item['subid'] === $navi_menu_path[1]) {
+          array_splice($trail, 1);
+          // 增加一级菜单
+          $shadow = $top_menu;
+          unset($shadow['items']);
+          $trail[] = $shadow;
+          // 增加二级菜单
+          $trail[] = $item;
+          // 增加节点菜单
+          $shadow = (array)$node;
+          $shadow['href'] = node_uri($node)['path'];
+          $trail[] = $shadow;
+          return;
+        }
+      }
+      unset($item);
+      return;
+    }
+  }
+  unset($top_menu);
+}
+
+/**
+ * 获取经过处理的路径轨迹
+ */
+function sse_get_trail()
+{
+  global $sse_node_type_parent_menu, $sse_admission_type_parent_menu;
+  static $trail;
+  if ($trail === null) {
+    $trail = menu_get_active_trail();
+    if (count($trail) >= 2) {
+      // 不在主菜单下，可能在子菜单下
+      if (!isset($route[1]['menu_name']) || $route[1]['menu_name'] !== sse_menu_navigation) {
+        // 当前在某个 node 下，则检查 node type 尝试匹配到某个菜单项下，或者如果是招生信息的话，尝试将 admission_type 字段匹配到某个菜单项下
+        if ($node = menu_get_object()) {
+          if (isset($node->field_admission_type)) {
+            // 是招生信息
+            $admission_type = $node->field_admission_type[LANGUAGE_NONE][0]['taxonomy_term']->field_admission_type_id[LANGUAGE_NONE][0]['value'];
+            if (isset($sse_admission_type_parent_menu[$admission_type])) {
+              sse_transform_trail($trail, $node, $sse_admission_type_parent_menu[$admission_type]);
+            }
+          } else {
+            // 普通信息，尝试匹配节点类型
+            if (isset($sse_node_type_parent_menu[$node->type])) {
+              sse_transform_trail($trail, $node, $sse_node_type_parent_menu[$node->type]);
+            }
+          }
+        }
+      }
+    }
+  }
+  $trail[count($trail) - 1]['__last'] = true;
+  return $trail;
 }
 
 /**
@@ -56,7 +137,7 @@ function sse_get_current_section()
 {
   static $section = null;
   if ($section === null) {
-    $route = menu_get_active_trail();
+    $route = sse_get_trail();
     if (count($route) >= 2) {
       // $route[0] 是首页
       if (isset($route[1]['menu_name']) && $route[1]['menu_name'] === sse_menu_navigation) {
@@ -78,7 +159,7 @@ function sse_get_current_section()
  */
 function sse_get_breadcrumb()
 {
-  $route = menu_get_active_trail();
+  $route = sse_get_trail();
   return $route;
 }
 
@@ -87,32 +168,52 @@ function sse_get_breadcrumb()
  */
 function sse_breadcrumb_output()
 {
-
+  $breadcrumb = sse_get_breadcrumb();
+  $output = '<div class="breadcrumb-container">/ ';
+  foreach ($breadcrumb as &$item) {
+    if (!isset($item['__last'])) {
+      $output .= '<a class="breadcrumb__item breadcrumb__item--link" target="_self" href="'.url($item['href']).'">'.check_plain($item['title']).'</a> / ';
+    } else {
+      $output .= '<span class="breadcrumb__item breadcrumb__item--text">'.check_plain($item['title']).'.html</span>';
+    }
+  }
+  $output .= '</div>';
+  unset($item);
+  return $output;
 }
 
 /**
  * 将一颗菜单树递归地转换为包含 ID 字段的菜单树
  */
-function sse_process_menu_tree_with_id(&$tree)
+function sse_process_menu_tree_with_id(&$tree, $preserve_raw = false)
 {
   $items = [];
   foreach ($tree['below'] as &$item) {
     if ($item['link']['hidden'] !== true) {
-      $items[] = sse_process_menu_tree_with_id($item);
+      $items[] = sse_process_menu_tree_with_id($item, $preserve_raw);
     }
   }
   unset($item);
 
-  $ret = [
-    'href' => $tree['link']['href'],
-    'title' => $tree['link']['title'],
-    'items' => $items
-  ];
+  if (!$preserve_raw) {
+    $ret = [
+      'href' => $tree['link']['href'],
+      'title' => $tree['link']['title'],
+      'items' => $items
+    ];    
+  } else {
+    $ret = $tree['link'];
+    $ret['items'] = $items;
+  }
+
   $entity = menu_fields_load_by_mlid($tree['link']['mlid']);
   if ($entity !== null) {
     $entity = $entity->wrapper();
     if (isset($entity->field_navigation_menu_id)) {
       $ret['id'] = $entity->field_navigation_menu_id->value();
+    }
+    if (isset($entity->field_navigation_menu_subid)) {
+      $ret['subid'] = $entity->field_navigation_menu_subid->value();
     }
   }
 
@@ -122,7 +223,7 @@ function sse_process_menu_tree_with_id(&$tree)
 /**
  * 获取包含 ID 字段的菜单树
  */
-function sse_get_menu_tree_with_id($menu_name, $depth = NULL)
+function sse_get_menu_tree_with_id($menu_name, $depth = NULL, $preserve_raw = false)
 {
   $result = [];
   $menu_tree = menu_tree_all_data($menu_name, NULL, $depth);
@@ -130,7 +231,7 @@ function sse_get_menu_tree_with_id($menu_name, $depth = NULL)
     if ($tree['link']['hidden'] === true) {
       continue;
     }
-    $result[] = sse_process_menu_tree_with_id($tree);
+    $result[] = sse_process_menu_tree_with_id($tree, $preserve_raw);
   }
   unset($tree);
   return $result;
@@ -228,7 +329,7 @@ function sse_get_navigation_main($is_frontpage = false)
 function sse_navigation_footer_output()
 {
   $output = '';
-  $navi = sse_get_menu_tree_with_id(sse_menu_navigation);
+  $navi = sse_get_menu_tree_with_id(sse_menu_navigation, 2);
   foreach ($navi as &$section) {
     $output .= '<div class="footer__navi__section footer__navi__section--'.check_plain($section['id']).'">';
     $output .= '<h1 class="footer__navi__section__title">'.check_plain($section['title']).'</h1>';
@@ -325,7 +426,7 @@ function sse_has_sidenav()
 {
   static $has_side_nav = null;
   if ($has_side_nav === null) {
-    $route = menu_get_active_trail();
+    $route = sse_get_trail();
     $has_side_nav = (count($route) >= 2 && isset($route[1]['menu_name']) && $route[1]['menu_name'] === sse_menu_navigation);
   }
   return $has_side_nav;
@@ -339,7 +440,7 @@ function sse_sidenav_output()
   if (!sse_has_sidenav()) {
     return '';
   }
-  $route = menu_get_active_trail();
+  $route = sse_get_trail();
   $parent = $route[1];
   $param = [
     'active_trail' => [$parent['plid']],

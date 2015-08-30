@@ -17,7 +17,7 @@
       <div class="content-container clearfix">
         <?php if (sse_has_sidenav()) { print sse_sidenav_output(); } ?>
         <section class="main-content">
-          <?php sse_get_breadcrumb(); ?>
+          <?php print sse_breadcrumb_output(); ?>
           <a id="main-content"></a>
           <div class="typo">
             <?php print render($title_prefix); ?>
