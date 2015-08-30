@@ -225,6 +225,12 @@ function sse_process_menu_tree_with_id(&$tree, $preserve_raw = false)
  */
 function sse_get_menu_tree_with_id($menu_name, $depth = NULL, $preserve_raw = false)
 {
+  $cid = 'sse:menu_tree_with_id:'.$menu_name.':'.$GLOBALS['language']->language.':'.(int)$depth.':'.(int)$preserve_raw;
+  $cache = cache_get($cid, 'cache_menu');
+  if ($cache && isset($cache->data)) {
+    return $cache->data;
+  }
+
   $result = [];
   $menu_tree = menu_tree_all_data($menu_name, NULL, $depth);
   foreach ($menu_tree as &$tree) {
@@ -234,6 +240,8 @@ function sse_get_menu_tree_with_id($menu_name, $depth = NULL, $preserve_raw = fa
     $result[] = sse_process_menu_tree_with_id($tree, $preserve_raw);
   }
   unset($tree);
+
+  cache_set($cid, $result, 'cache_menu');
   return $result;
 }
 
@@ -242,6 +250,12 @@ function sse_get_menu_tree_with_id($menu_name, $depth = NULL, $preserve_raw = fa
  */
 function sse_get_taxonomy_tree($taxonomy_name)
 {
+  $cid = 'sse:taxonomy_tree:'.$taxonomy_name.':'.$GLOBALS['language']->language;
+  $cache = cache_get($cid);
+  if ($cache && isset($cache->data)) {
+    return $cache->data;
+  }
+
   $result = [];
   $vocabulary = taxonomy_vocabulary_machine_name_load($taxonomy_name);
   // 为了使用 entity_uri 接口，需要最后一个参数为 true
@@ -254,6 +268,8 @@ function sse_get_taxonomy_tree($taxonomy_name)
     ];
   }
   unset($item);
+
+  cache_set($cid, $result);
   return $result;
 }
 
@@ -262,6 +278,12 @@ function sse_get_taxonomy_tree($taxonomy_name)
  */
 function sse_get_navigation_main($is_frontpage = false)
 {
+  $cid = 'sse:main_menu:'.(int)$is_frontpage.':'.$GLOBALS['language']->language;
+  $cache = cache_get($cid, 'cache_menu');
+  if ($cache && isset($cache->data)) {
+    return $cache->data;
+  }
+
   $result = [];
   $menu_tree = menu_tree_all_data(sse_menu_main);
   foreach ($menu_tree as &$item) {
@@ -320,6 +342,8 @@ function sse_get_navigation_main($is_frontpage = false)
     }
   }
   unset($item);
+
+  cache_set($cid, $result, 'cache_menu');
   return $result;
 }
 
@@ -328,6 +352,12 @@ function sse_get_navigation_main($is_frontpage = false)
  */
 function sse_navigation_footer_output()
 {
+  $cid = 'sse:html:navigation_footer:'.$GLOBALS['language']->language;
+  $cache = cache_get($cid, 'cache_menu');
+  if ($cache && isset($cache->data)) {
+    return $cache->data;
+  }
+
   $output = '';
   $navi = sse_get_menu_tree_with_id(sse_menu_navigation, 2);
   foreach ($navi as &$section) {
@@ -341,6 +371,8 @@ function sse_navigation_footer_output()
     $output .= '</ul></div>';
   }
   unset($section);
+
+  cache_set($cid, $output, 'cache_menu');
   return $output;
 }
 
@@ -395,8 +427,18 @@ function sse_navigation_output_tree(&$tree, $level, $is_frontpage = false)
 function sse_navigation_main_output()
 {
   $is_frontpage = drupal_is_front_page();
+
+  $cid = 'sse:html:navigation_main:'.(int)$is_frontpage.':'.$GLOBALS['language']->language;
+  $cache = cache_get($cid, 'cache_menu');
+  if ($cache && isset($cache->data)) {
+    return $cache->data;
+  }
+  
   $navi = sse_get_navigation_main($is_frontpage);
-  return sse_navigation_output_tree($navi, 0, $is_frontpage);
+  $output = sse_navigation_output_tree($navi, 0, $is_frontpage);
+
+  cache_set($cid, $output, 'cache_menu');
+  return $output;
 }
 
 /**
