@@ -9,8 +9,24 @@
     .main-content
       stack()
 
+.node--has-rightbar
+  .node__content
+    col(4/6)
+  
+  .node__rightbar
+    col(2/6)
+
++below(780px)
+  .node__content
+    stack()
+  .node__rightbar
+    stack()
+
 .main-content
   margin-bottom: 50px
+
+#page-title
+  margin-top: 20px
 
 .breadcrumb-container
   font-size: 14px
