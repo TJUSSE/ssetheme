@@ -38,6 +38,17 @@ if (isset($content['group_sidebar'])) {
     <?php endif; ?>
     
     <div class="node__body">
+    <?php if (isset($node) && $node->type === 'teacher_content'): ?>
+      <div class="teacher__info"><?php
+      if (!empty($node->field_teacher_title)) {
+        print $node->field_teacher_title[LANGUAGE_NONE][0]['safe_value'];
+      }
+      if (!empty($node->field_teacher_office)) {
+        $term = taxonomy_term_load($node->field_teacher_office[LANGUAGE_NONE][0]['tid']);
+        print ' @ ' . $term->name;
+      }
+      ?></div>
+    <?php endif; ?>
     <?php
       hide($content['comments']);
       hide($content['links']);
