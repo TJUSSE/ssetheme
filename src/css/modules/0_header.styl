@@ -28,14 +28,13 @@ for $section-name in $section-colors
 .header__logo-container
   margin-top: 40px
 
-.header__logo
-  display: inline-block
-  max-width: 80%
-
 .header__nav
   margin-top: 15px
 
 +below(rupture.desktop-cutoff)
+  .header__logo
+    display: inline-block
+    max-width: 80%
   // 非桌面时，header 高度与宽度成比例
   .header
     height: auto

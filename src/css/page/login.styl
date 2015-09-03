@@ -1,0 +1,75 @@
+$focus-color = #3FDFFF
+
+.page-user-login
+  background: #383B40
+  height: 100%
+  overflow: hidden
+  position: relative
+
+.page--login__bg
+  position: absolute
+  left: 0
+  top: 0
+  width: 100%
+  height: 100%
+
+.login__form
+  position: absolute
+  left: 50%
+  top: 50%
+  z-index: 100
+  transform: translateX(-50%) translateY(-50%)
+
+.login__dialog
+  width: 200px
+  margin: 0 auto
+
+  .description, label
+    display: none
+  
+  .form-text
+    width: 200px
+    font-size: 13px
+    line-height: 20px
+    padding: 5px
+    margin: 10px 0
+    background: #FFF
+    border: 1px solid #FFF
+    outline: 0
+    box-shadow: 0 0 0 4px rgba(#000, 20%)
+  
+    &:focus
+      border: 1px solid #AAA
+      box-shadow: 0 0 0 2px rgba($focus-color, 80%)
+  
+  .form-actions
+    margin-top: 10px
+    text-align: center
+
+  .form-submit
+    border: 0
+    background: linear-gradient(180deg, #EEE, #DDD)
+    padding: 0 20px
+    line-height: 30px
+    border-radius: 15px
+    box-shadow: 0 0 0 4px rgba(#000, 20%)
+    color: #222
+    font-size: 13px
+    display: inline-block
+    outline: 0
+    
+    &:hover
+      background: linear-gradient(180deg, #FFF, #EEE)
+      box-shadow: 0 0 0 2px rgba($focus-color, 80%)
+    
+    &:active
+      background: linear-gradient(180deg, #EEE, #FFF)
+      box-shadow: 0 0 0 2px rgba($focus-color, 30%)
+      outline: 0
+
+.login__logo
+  text-align: center
+  margin-bottom: 20px
+  
+  img
+    width: 400px

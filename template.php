@@ -533,19 +533,32 @@ function sse_preprocess_maintenance_page(&$variables, $hook) {
  * @param $hook
  *   The name of the template being rendered ("html" in this case.)
  */
-function sse_preprocess_html(&$variables, $hook) {
+function sse_preprocess_html(&$variables, $hook)
+{
   $variables['base_path'] = base_path();
   $variables['path_to_sse'] = drupal_get_path('theme', 'sse');
 
-  // The body tag's classes are controlled by the $classes_array variable. To
-  // remove a class from $classes_array, use array_diff().
-  //$variables['classes_array'] = array_diff($variables['classes_array'], array('class-to-remove'));
+  if (arg(0) == 'user' && !$GLOBALS['user']->uid) {
+    if (!in_array('page-user-login', $variables['classes_array'])) {
+      $variables['classes_array'][] = 'page-user-login';
+    }
+  }
 }
-// */
 
 function sse_html_head_alter(&$head_elements)
 {
   unset($head_elements['system_meta_generator']);
+}
+
+function sse_preprocess_page(&$variables, $hook)
+{
+  if (arg(0) == 'user' && !$GLOBALS['user']->uid) {
+    // 给未登录的用户 /user 加上 user__login
+    if (!in_array('page__user__login', $variables['theme_hook_suggestions'])) {
+      $variables['theme_hook_suggestions'][] = 'page__user__login';
+    }
+    drupal_add_js(drupal_get_path('theme', 'sse') .'/js/login.js', 'file');
+  }
 }
 
 /**

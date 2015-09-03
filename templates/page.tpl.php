@@ -1,3 +1,5 @@
+  <div class="body__ribbon"></div>
+
   <section class="page-row">
     <header class="header">
       <div class="header__background"></div>
