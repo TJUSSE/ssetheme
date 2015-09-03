@@ -1,0 +1,87 @@
+.terminal .terminal-output .format, .cmd .format,
+.cmd .prompt, .cmd .prompt div, .terminal .terminal-output div div
+  display: inline-block
+
+.cmd .clipboard 
+  position: absolute
+  bottom: 0
+  left: 0
+  opacity: 0.01
+  width: 2px
+
+.cmd > .clipboard 
+  position: fixed
+
+.terminal 
+  padding: 10px
+  position: relative
+  overflow: hidden
+
+.cmd 
+  padding: 0
+  margin: 0
+  height: 1.3em
+
+.cmd .cursor.blink 
+  animation: blink 1s infinite steps(1, start)
+
+@keyframes blink 
+  0%, 100% 
+    background-color: #000
+    color: #E8E8E8
+  
+  50% 
+    background-color: #bbb
+    color: #000
+
+.terminal .terminal-output div div, .cmd .prompt 
+  display: block
+  line-height: 18px
+  height: auto
+
+.cmd .prompt 
+  float: left
+
+.terminal, .cmd 
+  font-family: "Source Code Pro", "Menlo", "Monaco", "Consolas", "FreeMono", "monospace"
+  color: #E8E8E8
+  background-color: #000
+  font-size: 16px
+  line-height: 18px
+
+.terminal-output > div 
+  min-height: 18px
+
+.terminal .terminal-output div span 
+  display: inline-block
+
+.cmd span 
+  float: left
+
+.terminal .inverted, .cmd .inverted, .cmd .cursor.blink 
+  background-color: #aaa
+  color: #000
+
+.terminal .terminal-output div div::-moz-selection,
+.terminal .terminal-output div span::-moz-selection,
+.terminal .terminal-output div div a::-moz-selection 
+  background-color: #aaa
+  color: #000
+
+.terminal .terminal-output div div::selection,
+.terminal .terminal-output div div a::selection,
+.terminal .terminal-output div span::selection,
+.cmd > span::selection,
+.cmd .prompt span::selection 
+  background-color: #aaa
+  color: #000
+
+.terminal .terminal-output div.error, .terminal .terminal-output div.error div 
+  color: red
+
+.terminal a 
+  color: #0F60FF
+
+.terminal a:hover 
+  color: red
+

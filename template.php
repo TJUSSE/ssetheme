@@ -538,10 +538,20 @@ function sse_preprocess_html(&$variables, $hook)
   $variables['base_path'] = base_path();
   $variables['path_to_sse'] = drupal_get_path('theme', 'sse');
 
+  // 为登录界面增加样式
   if (arg(0) == 'user' && !$GLOBALS['user']->uid) {
     if (!in_array('page-user-login', $variables['classes_array'])) {
       $variables['classes_array'][] = 'page-user-login';
     }
+    return;
+  }
+
+  // 为错误界面增加样式
+  $header = drupal_get_http_header('status');
+  if ($header === '404 Not Found') {
+    $variables['classes_array'][] = 'page-404 page-error';
+  } elseif ($header === '403 Forbidden') {
+    $variables['classes_array'][] = 'page-403 page-error';
   }
 }
 
@@ -558,6 +568,16 @@ function sse_preprocess_page(&$variables, $hook)
       $variables['theme_hook_suggestions'][] = 'page__user__login';
     }
     drupal_add_js(drupal_get_path('theme', 'sse') .'/js/login.js', 'file');
+    return;
+  }
+
+  // 自定义 404 和 403 页面
+  $header = drupal_get_http_header('status');
+  if ($header === '404 Not Found' || $header === '403 Forbidden') {
+    $variables['theme_hook_suggestions'][] = 'page__404_403';
+    //drupal_add_js(drupal_get_path('theme', 'sse') .'/js/vendor/jquery.mousewheel.min.js', 'file');
+    drupal_add_js(drupal_get_path('theme', 'sse') .'/js/vendor/jquery.terminal-0.8.8.min.js', 'file');
+    drupal_add_js(drupal_get_path('theme', 'sse') .'/js/error-404-403.js', 'file');
   }
 }
 

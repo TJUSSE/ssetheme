@@ -1,0 +1,59 @@
+.page-error
+  position: relative
+  background: url(../img/error-bg.jpg) no-repeat center center
+  background-size: cover
+
+.page-error__shell
+  position: absolute
+  left: 50%
+  top: 50%
+  transform: translateX(-50%) translateY(-50%)
+  border-radius: 4px
+  box-shadow: 0 0 7px rgba(#000, 0.4)
+  background: #000
+  
+  .header
+    user-select: none
+    background: #E8E8E8
+    background: linear-gradient(180deg, #ECECEC, #E1E1E1)
+    border-top: 1px solid #F6F6F6
+    border-radius: 4px 4px 0 0
+    height: 35px
+    padding: 0 5px
+    position: relative
+    text-align: center
+
+  .shell-content
+    margin: 1px
+    padding: 5px
+    width: 510px
+    height: 310px
+
+  .header__bullets
+    position: absolute
+    left: 5px
+    top: 0
+  
+  .bullet
+    display: inline-block
+    vertical-align: top
+    margin-top: unit((35 - 12) / 2 - 1, 'px')
+    margin-left: 5px
+    width: 12px
+    height: 12px
+    border-radius: 50%
+  
+  .header__title
+    line-height: 35px
+    vertical-align: top
+    font-size: 13px
+    color: #333
+    
+  .bullet-red
+    background: #ff3b47
+
+  .bullet-yellow
+    background: #ffbd00
+  
+  .bullet-green
+    background: #00d640
