@@ -428,7 +428,7 @@ function sse_navigation_main_output()
 {
   $is_frontpage = drupal_is_front_page();
 
-  $cid = 'sse:html:navigation_main:'.(int)$is_frontpage.':'.$GLOBALS['language']->language;
+  $cid = 'sse:html:navigation_main:'.(int)$is_frontpage.':'.sse_get_current_section().':'.$GLOBALS['language']->language;
   $cache = cache_get($cid, 'cache_menu');
   if ($cache && isset($cache->data)) {
     return $cache->data;
