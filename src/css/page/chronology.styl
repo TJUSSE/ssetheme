@@ -1,0 +1,28 @@
+$chronology-width = 4
+$chronology-radius = 6
+$chronology-circle-size = 12
+
+.chronology-list-content ul
+  margin: 0
+  padding: 0
+
+.chronology-list-content li
+  border-left: unit($chronology-width, 'px') solid #EEE
+  padding-left: 20px
+  list-style: none
+  margin-left: 10px
+  margin-bottom: 0
+  padding-bottom: 1.2em
+  position: relative
+
+.chronology-list-content li::before
+  content: ''
+  display: block
+  position: absolute
+  left: unit($chronology-width / 2 - $chronology-circle-size / 2 - $chronology-width, 'px')
+  top: unit(16 * 1.8 / 2 - $chronology-circle-size / 2, 'px')  // todo: 16 -> non-magic
+  width: unit($chronology-radius * 2, 'px')
+  height: unit($chronology-radius * 2, 'px')
+  border-radius: 50%
+  border: 3px solid #CCC
+  background: #FFF

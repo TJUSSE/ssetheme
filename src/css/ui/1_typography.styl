@@ -230,6 +230,8 @@ for $section-name, $section-color in $section-colors
     .typo
       h2
         color: darken($section-color, 30%)
+        a, a:visited, a:hover
+          color: darken($section-color, 30%)
       a
         color: $text-color
         border-bottom-color: @color
