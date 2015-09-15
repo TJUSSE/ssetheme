@@ -11,6 +11,8 @@ const sse_menu_navigation = 'menu-sse-navigation';
 const sse_menu_footer = 'menu-sse-footer';
 const sse_menu_main = 'menu-sse-main';
 
+const sse_cache_enabled = false;
+
 /**
  * 这里指定的是 <meta name="theme-color"> 中的颜色，该属性可以指定 Android Chrome 浏览器中标题栏颜色
  * @var array
@@ -34,6 +36,8 @@ $sse_node_type_parent_menu = [
   'teacher_content' => ['education', 'faculty'],
   'research_team_content' => ['research', 'team'],
   'excellent_curriculum_content' => ['education', 'achievements'],
+  'news_content' => ['news'],
+  'notice_content' => ['notice'],
 ];
 
 global $sse_admission_type_parent_menu;
@@ -140,7 +144,7 @@ function sse_get_current_section()
     $route = sse_get_trail();
     if (count($route) >= 2) {
       // $route[0] 是首页
-      if (isset($route[1]['menu_name']) && $route[1]['menu_name'] === sse_menu_navigation) {
+      if (isset($route[1]['menu_name']) && ($route[1]['menu_name'] === sse_menu_navigation || $route[1]['menu_name'] === sse_menu_main)) {
         $entity = menu_fields_load_by_mlid($route[1]['mlid'])->wrapper();
         $menu_id = $entity->field_navigation_menu_id->value();
         $section = $menu_id;
@@ -227,7 +231,7 @@ function sse_get_menu_tree_with_id($menu_name, $depth = NULL, $preserve_raw = fa
 {
   $cid = 'sse:menu_tree_with_id:'.$menu_name.':'.$GLOBALS['language']->language.':'.(int)$depth.':'.(int)$preserve_raw;
   $cache = cache_get($cid, 'cache_menu');
-  if ($cache && isset($cache->data)) {
+  if ($cache && isset($cache->data) && sse_cache_enabled) {
     return $cache->data;
   }
 
@@ -252,7 +256,7 @@ function sse_get_taxonomy_tree($taxonomy_name)
 {
   $cid = 'sse:taxonomy_tree:'.$taxonomy_name.':'.$GLOBALS['language']->language;
   $cache = cache_get($cid);
-  if ($cache && isset($cache->data)) {
+  if ($cache && isset($cache->data) && sse_cache_enabled) {
     return $cache->data;
   }
 
@@ -280,7 +284,7 @@ function sse_get_navigation_main($is_frontpage = false)
 {
   $cid = 'sse:main_menu:'.(int)$is_frontpage.':'.$GLOBALS['language']->language;
   $cache = cache_get($cid, 'cache_menu');
-  if ($cache && isset($cache->data)) {
+  if ($cache && isset($cache->data) && sse_cache_enabled) {
     return $cache->data;
   }
 
@@ -354,7 +358,7 @@ function sse_navigation_footer_output()
 {
   $cid = 'sse:html:navigation_footer:'.$GLOBALS['language']->language;
   $cache = cache_get($cid, 'cache_menu');
-  if ($cache && isset($cache->data)) {
+  if ($cache && isset($cache->data) && sse_cache_enabled) {
     return $cache->data;
   }
 
@@ -430,7 +434,7 @@ function sse_navigation_main_output()
 
   $cid = 'sse:html:navigation_main:'.(int)$is_frontpage.':'.sse_get_current_section().':'.$GLOBALS['language']->language;
   $cache = cache_get($cid, 'cache_menu');
-  if ($cache && isset($cache->data)) {
+  if ($cache && isset($cache->data) && sse_cache_enabled) {
     return $cache->data;
   }
   
