@@ -23,7 +23,7 @@ foreach ($sse_news_groups as $group_name => $items) {
   <div class="news-list__row clearfix">
     <?php foreach ($row as $item): ?>
       <div class="news-list__col">
-        <div class="news-list__col-inner">
+        <div class="news-list__col-inner clearfix">
           <?php print $item['row']; ?>
         </div>
       </div>

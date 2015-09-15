@@ -1,15 +1,53 @@
 $news-navigation-border-color = #EEE
 $news-navigation-border-color-hover = #CCC
 
+.news-list__month
+  color: #AAA !important
+
 .news-list__row
   position: relative
+  margin-bottom: 20px
 
 .news-list__col
   float: left
   width: 33%
 
+  h4
+    margin-top: 0
+  
 .news-list__col-inner
-  padding-right: 10px
+  padding-right: 20px
+
+.news-list__date
+  float: left
+  width: 50px
+  text-align: center
+  line-height: 1
+  margin-right: 10px
+
+.news-list__day
+  font-size: 36px
+  color: $section-colors['news']
+
+.news-list__year-month
+  font-size: 14px
+  margin-top: 10px
+  color: #AAA
+
+.news-list__main
+  padding-left: 80px
+
+.body-section-news .news-list__title
+  a, a:visited, a:active
+    color: #000
+    border-bottom-color: transparent
+    text-decoration: none
+  
+.news-list__body
+  color: #888
+  font-size: 14px
+
+// Pagination
 
 .view-news-list .pager
   margin: 40px 0
