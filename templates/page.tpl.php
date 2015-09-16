@@ -1,4 +1,6 @@
-  <div class="body__ribbon"></div>
+  <section class="page-row">
+    <div class="body__ribbon"></div>
+  </section>
 
   <section class="page-row">
     <header class="header">
