@@ -74,30 +74,50 @@ function sse_get_section_color($key)
 
 function sse_transform_trail(&$trail, $node, $navi_menu_path)
 {
-  $navi_menu = sse_get_menu_tree_with_id(sse_menu_navigation, 2, true);
-  foreach ($navi_menu as &$top_menu) {
-    if (isset($top_menu['id']) && $top_menu['id'] === $navi_menu_path[0]) {
-      foreach ($top_menu['items'] as &$item) {
-        if (isset($item['subid']) && $item['subid'] === $navi_menu_path[1]) {
-          array_splice($trail, 1);
-          // 增加一级菜单
-          $shadow = $top_menu;
-          unset($shadow['items']);
-          $trail[] = $shadow;
-          // 增加二级菜单
-          $trail[] = $item;
-          // 增加节点菜单
-          $shadow = (array)$node;
-          $shadow['href'] = node_uri($node)['path'];
-          $trail[] = $shadow;
-          return;
-        }
+  // 对于新闻和通知节点，菜单项是 sse_menu_main，需要特殊处理
+  if ($navi_menu_path[0] === 'news' || $navi_menu_path[0] === 'notice') {
+    $navi_menu = sse_get_menu_tree_with_id(sse_menu_main, 1, true);
+    foreach ($navi_menu as &$top_menu) {
+      if (isset($top_menu['id']) && $top_menu['id'] === $navi_menu_path[0]) {
+        array_splice($trail, 1);
+        // 增加一级菜单
+        $shadow = $top_menu;
+        unset($shadow['items']);
+        $trail[] = $shadow;
+        // 增加节点菜单
+        $shadow = (array)$node;
+        $shadow['href'] = node_uri($node)['path'];
+        $trail[] = $shadow;
+        return;
       }
-      unset($item);
-      return;
     }
+    unset($top_menu);
+  } else {
+    $navi_menu = sse_get_menu_tree_with_id(sse_menu_navigation, 2, true);
+    foreach ($navi_menu as &$top_menu) {
+      if (isset($top_menu['id']) && $top_menu['id'] === $navi_menu_path[0]) {
+        foreach ($top_menu['items'] as &$item) {
+          if (isset($item['subid']) && $item['subid'] === $navi_menu_path[1]) {
+            array_splice($trail, 1);
+            // 增加一级菜单
+            $shadow = $top_menu;
+            unset($shadow['items']);
+            $trail[] = $shadow;
+            // 增加二级菜单
+            $trail[] = $item;
+            // 增加节点菜单
+            $shadow = (array)$node;
+            $shadow['href'] = node_uri($node)['path'];
+            $trail[] = $shadow;
+            return;
+          }
+        }
+        unset($item);
+        return;
+      }
+    }
+    unset($top_menu);
   }
-  unset($top_menu);
 }
 
 /**
