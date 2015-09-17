@@ -425,6 +425,12 @@ function sse_navigation_output_tree(&$tree, $level, $is_frontpage = false)
         $output .= ' nav__i--active';
       }
     }
+    // 顶级菜单，将链接修正到第一个子链接
+    if ($level === 0 && $item['href'] === '<front>') {
+      if ($has_subitems) {
+        $item['href'] = $item['items'][0]['href'];
+      }
+    }
     $output .= '"><a class="nav__l '.$append_class('nav__l').'" href="'.url($item['href']).'" target="_self">'.check_plain($item['title']);
     // 如果是顶级菜单，则有子项的时候，显示 v 并且紧跟文字
     // 如果不是顶级菜单，则有子项的时候，显示 > 并且单独排列
@@ -515,10 +521,14 @@ function sse_sidenav_output()
     'max_depth' => $parent['depth'] + 1,
     'conditions' => ['plid' => $parent['mlid']],
   ];
-  $items = menu_build_tree($parent['menu_name'], $param);
+  $items = array_values(menu_build_tree($parent['menu_name'], $param));
   $entity = menu_fields_load_by_mlid($parent['mlid'])->wrapper();
   $menu_id = $entity->field_navigation_menu_id->value();
   $output = '<nav class="sidenav sidenav--section-'.check_plain($menu_id).'">';
+  // 修正链接到第一个子项
+  if (count($items) > 0 && $parent['href'] === '<front>') {
+    $parent['href'] = $items[0]['link']['href'];
+  }
   $output .= '<h1 class="sidenav__title"><a href="'.url($parent['href']).'" target="_self" class="sidenav__title__link">'. check_plain($parent['title']) .'</a></h1>';
   $output .= '<div class="sidenav__edge"></div><ul class="sidenav__list">';
   foreach ($items as &$item) {
