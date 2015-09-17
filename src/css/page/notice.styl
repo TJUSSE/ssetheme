@@ -1,0 +1,42 @@
+.notice-subscribe-module
+  height: 200px
+  position: relative
+  background-color: #80c8d6
+  background-image: url(../img/notice-subscribe.png)
+  background-position: left top
+  background-repeat: no-repeat
+
+.notice-subscribe-module__wrap
+  position: absolute
+  left: 190px
+  top: 50%
+  margin-top: -37px
+  right: 20px
+  color: #FFF
+  text-align: center
+  line-height: 30px
+  font-size: 14px
+
+.typo .notice-subscribe-module__wrap
+  a.button, a.button:visited, a.button:active
+    display: inline-block
+    border: 2px solid #FFF
+    border-radius: 30px
+    padding: 0 20px
+    color: #FFF
+    margin-bottom: 10px
+  a.button:hover
+    border: 2px solid #FFF
+    background: #FFF
+    color: #222
+
++retina()
+  .notice-subscribe-module
+    background-image: url(../img/notice-subscribe@2x.png)
+
++between(780px, 1250px)
+  .notice-subscribe-module
+    height: 120px
+    background-image: url(../img/notice-subscribe-small.png)
+  .notice-subscribe-module__wrap
+    left: 115px

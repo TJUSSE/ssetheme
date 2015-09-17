@@ -232,15 +232,16 @@ for $section-name, $section-color in $section-colors
         color: darken($section-color, 30%)
         a, a:visited, a:hover, a:active
           color: darken($section-color, 30%)
-      a
-        color: $text-color
-        border-bottom-color: @color
-        &:visited, &:active
-          color: $text-color
-          border-bottom-color: @color
-        &:hover
-          color: darken($section-color, 20%)
-          border-bottom-color: @color
+
+.typo
+  a, a:visited, a:active
+    color: $text-color
+    border-bottom-color: @color
+
+for $section-name, $section-color in $section-colors
+  .body-section-{$section-name} .typo a:hover
+    color: darken($section-color, 20%)
+    border-bottom-color: @color
 
 .wf-active
   h1, h2, h3, h4, h5, h6

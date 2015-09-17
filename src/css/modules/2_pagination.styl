@@ -1,0 +1,38 @@
+$pagination-border-color = #EEE
+$pagination-border-color-hover = #CCC
+
+.typo ul.pager
+  margin: 40px 0
+  padding: 0
+  border-top: 2px solid $pagination-border-color
+  text-align: center
+  font-size: 14px
+
+.typo .pager
+  a, a:visited, a:active
+    display: inline-block
+    padding: 5px 10px
+    text-decoration: none
+    border: 0
+    color: darken($pagination-border-color, 30%)
+  
+  a:hover
+    color: darken($pagination-border-color-hover, 50%)
+
+  li
+    display: inline-block
+    list-style: none
+    margin: -2px 0 0 0
+    border-top: 2px solid $pagination-border-color
+    
+    &:hover
+      border-color: $pagination-border-color-hover
+  
+  .pager-current
+    padding: 5px 10px
+
+for $section-name, $section-color in $section-colors
+  // 鼠标移入项
+  .body-section-{$section-name} .typo .pager .pager-current
+    color: $section-color
+    border-color: $section-color

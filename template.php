@@ -19,14 +19,14 @@ const sse_cache_enabled = false;
  */
 global $sse_section_colors;
 $sse_section_colors = [
-  'default' =>   '#53A0D4',
-  'overview' =>  '#9FC1E3',
-  'admission' => '#E3B48D',
-  'education' => '#E1A6E3',
-  'research' =>  '#F8DA89',
-  'activity' =>  '#C9D36F',
-  'news' =>      '#DEA1A1',
-  'notice' =>    '#A4CBCC',
+  'default' =>   '#58c3f0',
+  'overview' =>  '#d47385',
+  'admission' => '#fed17b',
+  'education' => '#aed580',
+  'research' =>  '#f89e68',
+  'activity' =>  '#80acdc',
+  'news' =>      '#e86e6e',
+  'notice' =>    '#6dc9c3',
 ];
 
 global $sse_node_type_parent_menu;

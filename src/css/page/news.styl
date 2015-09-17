@@ -1,8 +1,5 @@
-$news-navigation-border-color = #EEE
-$news-navigation-border-color-hover = #CCC
-
-.news-list__month
-  color: #AAA !important
+.typo h2.news-list__month
+  color: #AAA
 
 .news-list__row
   position: relative
@@ -50,36 +47,3 @@ $news-navigation-border-color-hover = #CCC
 .news-list__body
   color: #888
   font-size: 14px
-
-// Pagination
-
-.view-news-list .pager
-  margin: 40px 0
-  padding: 0
-  border-top: 2px solid $news-navigation-border-color
-  text-align: center
-  font-size: 14px
-  
-  a, a:visited, a:active
-    display: inline-block
-    padding: 5px 10px
-    text-decoration: none
-    border: 0
-    color: darken($news-navigation-border-color, 30%)
-  
-  a:hover
-    color: darken($news-navigation-border-color-hover, 50%)
-
-  li
-    display: inline-block
-    list-style: none
-    margin: -2px 0 0 0
-    border-top: 2px solid $news-navigation-border-color
-    
-    &:hover
-      border-color: $news-navigation-border-color-hover
-  
-  .pager-current
-    padding: 5px 10px
-    color: $section-colors['news'] !important
-    border-color: $section-colors['news'] !important
