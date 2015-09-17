@@ -225,22 +225,22 @@ h1, h2, h3, h4, h5, h6
   color: #FFF
 
 // 不同 section 具有不同的 h2 颜色和不同的超链接颜色
-for $section-name, $section-color in $section-colors
+for $section-name, $section-color in $section-text-colors
   .body-section-{$section-name}
     .typo
       h2
-        color: darken($section-color, 30%)
+        color: $section-color
         a, a:visited, a:hover, a:active
-          color: darken($section-color, 30%)
+          color: $section-color
 
 .typo
   a, a:visited, a:active
     color: $text-color
     border-bottom-color: @color
 
-for $section-name, $section-color in $section-colors
+for $section-name, $section-color in $section-text-colors
   .body-section-{$section-name} .typo a:hover
-    color: darken($section-color, 20%)
+    color: $section-color
     border-bottom-color: @color
 
 .wf-active
