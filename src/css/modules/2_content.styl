@@ -9,24 +9,18 @@
     .main-content
       stack()
 
-.intro--two-col
-  .group-left
-    width: 70%
-  .group-right
-    width: 26%
-  &.group-one-column
-    .group-left, .group-right
-      width: 100%
+.intro-layout--two-col
+  .intro__left
+    col(7/10)
+  .intro__right
+    col(3/10)
 
 .content-has-sidenav
-  .intro--two-col
-    .group-left
-      width: 64%
-    .group-right
-      width: 32%
-    &.group-one-column
-      .group-left, .group-right
-        width: 100%
+  .intro-layout--two-col
+    .intro__left
+      col(4/6)
+    .intro__right
+      col(2/6)
 
 .main-content
   margin-bottom: 50px
