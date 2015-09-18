@@ -40,3 +40,45 @@
     background-image: url(../img/notice-subscribe-small.png)
   .notice-subscribe-module__wrap
     left: 115px
+
+.typo h2.notice-list__month
+  color: #AAA
+
+.notice-list__row
+  margin: 30px 0
+
+  h4
+    margin-top: 0
+  
+.body-section-notice .notice-list__title
+  a, a:visited, a:link
+    color: #000
+    border-bottom-color: transparent
+    font-weight: normal
+    text-decoration: none
+  a:hover
+    color: $section-text-colors['notice']
+    border-color: @color
+
+.notice-list__extra
+  font-size: 14px
+
+.notice-list__deadline--passed
+  color: #AAA
+.notice-list__deadline--not-passed
+  color: red
+
+.typo .notice-list__extra
+  a, a:visited, a:link
+    display: inline-block
+    border: 1px solid #EEE
+    color: #AAA
+    padding: 0 8px
+    margin-left: 5px
+    line-height: 20px
+    border-radius: 11px
+    font-size: 12px
+  a:hover
+    background-color: $section-colors['notice']
+    border-color: @background-color
+    color: #FFF

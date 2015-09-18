@@ -2,29 +2,29 @@
 
 // 按月分组，并三个一行
 
-$sse_news_groups = [];
+$sse_groups = [];
 
 foreach ($rows as $id => $row) {
   $sse_current_year_month = date('Y 年 n 月', $view->result[$id]->node_created);
-  if (!isset($sse_news_groups[$sse_current_year_month])) {
-    $sse_news_groups[$sse_current_year_month] = [];
+  if (!isset($sse_groups[$sse_current_year_month])) {
+    $sse_groups[$sse_current_year_month] = [];
   }
-  $sse_news_groups[$sse_current_year_month][] = ['id' => $id, 'row' => $row];
+  $sse_groups[$sse_current_year_month][] = $row;
 }
 
-foreach ($sse_news_groups as $group_name => $items) {
-  $sse_news_groups[$group_name] = array_chunk($items, 3);
+foreach ($sse_groups as $group_name => $items) {
+  $sse_groups[$group_name] = array_chunk($items, 3);
 }
 
 ?>
-<?php foreach ($sse_news_groups as $group_name => $rows): ?>
+<?php foreach ($sse_groups as $group_name => $chunks): ?>
   <h2 class="news-list__month"><?php print $group_name; ?></h2>
-  <?php foreach ($rows as $row): ?>
+  <?php foreach ($chunks as $chunk): ?>
   <div class="news-list__row clearfix">
-    <?php foreach ($row as $item): ?>
+    <?php foreach ($chunk as $row): ?>
       <div class="news-list__col">
         <div class="news-list__col-inner clearfix">
-          <?php print $item['row']; ?>
+          <?php print $row; ?>
         </div>
       </div>
     <?php endforeach; ?>

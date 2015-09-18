@@ -1,0 +1,23 @@
+.calendar-style-list__date
+  float: left
+  width: 50px
+  text-align: center
+  line-height: 1
+  margin-right: 10px
+  vertical-align: top
+
+.calendar-style-list__day
+  font-size: 36px
+
+for $section-name, $section-color in $section-text-colors
+  .body-section-{$section-name} .calendar-style-list__day
+    color: $section-color
+
+.calendar-style-list__year-month
+  font-size: 14px
+  margin-top: 10px
+  color: #AAA
+
+.calendar-style-list__main
+  padding-left: 80px
+  vertical-align: top
