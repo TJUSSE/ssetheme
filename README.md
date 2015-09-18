@@ -1,5 +1,16 @@
 # 同济大学软件学院网站·主站主题
 
+## banners
+
+代码库中不自带各个栏目的 banners，可以使用以下方式获取我们默认提供的 banners：
+
+```bash
+# cd sseweb/sites/default/themes/sse
+cd img/banners
+wget http://cdug.tongji.edu.cn/sse/banners.tar.gz
+tar xzf banners.tar.gz
+```
+
 ## 编译
 
 ### gulp

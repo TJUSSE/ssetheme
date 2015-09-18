@@ -2,4 +2,5 @@
 /css/
 /js/
 node_modules/
-/img/banners/
+/img/banners/*
+!/img/banners/.gitkeep
