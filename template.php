@@ -146,6 +146,12 @@ function sse_get_trail()
               sse_transform_trail($trail, $node, $sse_node_type_parent_menu[$node->type]);
             }
           }
+        } else {
+          // 对通知列表作特殊处理
+          $views_page = views_get_page_view();
+          if (is_object($views_page) && $views_page->name === 'notice_list_filter') {
+            $trail[count($trail) - 1]['title'] = $views_page->get_title();
+          }
         }
       }
     }
@@ -169,7 +175,12 @@ function sse_get_current_section()
         $menu_id = $entity->field_navigation_menu_id->value();
         $section = $menu_id;
       } else {
-        $section = 'default';
+        $views_page = views_get_page_view();
+        if (is_object($views_page) && $views_page->name === 'notice_list_filter') {
+          $section = 'notice';
+        } else {
+          $section = 'default';
+        }
       }
     } else {
       $section = 'default';
