@@ -429,6 +429,11 @@ function sse_navigation_output_tree(&$tree, $level, $is_frontpage = false)
   $output = '<ul class="'.$append_class('nav__list').'">'."\n";
   foreach ($tree as &$item) {
     $has_subitems = (isset($item['items']) && count($item['items']) > 0);
+    if ($has_subitems) {
+      // 预处理子项，这会使得函数进行先序遍历
+      $subitem_html = '<div class="'.$append_class('nav__sublist').'">'.sse_navigation_output_tree($item['items'], $level + 1, $is_frontpage).'</div>';
+    }
+
     $output .= '<li class="'.$append_class('nav__i');
     if (isset($item['id'])) {
       $output .= ' nav__i--section--'.check_plain($item['id']);
@@ -436,8 +441,9 @@ function sse_navigation_output_tree(&$tree, $level, $is_frontpage = false)
         $output .= ' nav__i--active';
       }
     }
-    // 顶级菜单，将链接修正到第一个子链接
-    if ($level === 0 && $item['href'] === '<front>') {
+    // 父级菜单，将链接修正到第一个子链接
+    // 由于是先序遍历，所以子链接已修正过
+    if ($item['href'] === '<front>' && isset($item['items']) && count($item['items']) > 0) {
       if ($has_subitems) {
         $item['href'] = $item['items'][0]['href'];
       }
@@ -451,9 +457,8 @@ function sse_navigation_output_tree(&$tree, $level, $is_frontpage = false)
       $output .= '<div class="nav__icon"><i class="icon-chevron_right"></i></div>';
     }
     $output .= '</a>';
-    // 增加子菜单
     if ($has_subitems) {
-      $output .= '<div class="'.$append_class('nav__sublist').'">'.sse_navigation_output_tree($item['items'], $level + 1, $is_frontpage).'</div>';
+      $output .= $subitem_html;
     }
     $output .= '</li>'."\n";
   }
