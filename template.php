@@ -612,12 +612,17 @@ function sse_html_head_alter(&$head_elements)
 
 function sse_preprocess_page(&$variables, $hook)
 {
-  if (arg(0) == 'user' && !$GLOBALS['user']->uid) {
+  if (arg(0) === 'user' && !$GLOBALS['user']->uid) {
     // 给未登录的用户 /user 加上 user__login
     if (!in_array('page__user__login', $variables['theme_hook_suggestions'])) {
       $variables['theme_hook_suggestions'][] = 'page__user__login';
     }
     drupal_add_js(drupal_get_path('theme', 'sse') .'/js/login.js', 'file');
+    return;
+  }
+
+  if (arg(0) === 'index') {
+    drupal_add_js(drupal_get_path('theme', 'sse') .'/js/sse-slider.js', 'file');
     return;
   }
 
@@ -628,6 +633,7 @@ function sse_preprocess_page(&$variables, $hook)
     //drupal_add_js(drupal_get_path('theme', 'sse') .'/js/vendor/jquery.mousewheel.min.js', 'file');
     drupal_add_js(drupal_get_path('theme', 'sse') .'/js/vendor/jquery.terminal-0.8.8.min.js', 'file');
     drupal_add_js(drupal_get_path('theme', 'sse') .'/js/error-404-403.js', 'file');
+    return;
   }
 }
 
