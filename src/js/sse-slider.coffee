@@ -23,7 +23,7 @@ class IndexSlider
     @initDOM()
     @resize()
     @addListeners()
-    @changeToSlide 0
+    @changeToSlide 0 if @slideNum > 0
 
   initDOM: ->
     $('
