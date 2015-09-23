@@ -22,6 +22,7 @@ $sse_section_colors = [
   'default' =>   '#58c3f0',
   'overview' =>  '#d47385',
   'admission' => '#fed17b',
+  'programme' => '#fed17b', // ENGLISH
   'education' => '#aed580',
   'research' =>  '#f89e68',
   'activity' =>  '#80acdc',
@@ -630,7 +631,6 @@ function sse_preprocess_page(&$variables, $hook)
   $header = drupal_get_http_header('status');
   if ($header === '404 Not Found' || $header === '403 Forbidden') {
     $variables['theme_hook_suggestions'][] = 'page__404_403';
-    //drupal_add_js(drupal_get_path('theme', 'sse') .'/js/vendor/jquery.mousewheel.min.js', 'file');
     drupal_add_js(drupal_get_path('theme', 'sse') .'/js/vendor/jquery.terminal-0.8.8.min.js', 'file');
     drupal_add_js(drupal_get_path('theme', 'sse') .'/js/error-404-403.js', 'file');
     return;
