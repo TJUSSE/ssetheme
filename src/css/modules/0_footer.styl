@@ -38,7 +38,7 @@ $footer-text-link = mix(#FFF, $footer-bgcolor, 70%)
   li
     margin-left: 10px
 
-+below(rupture.desktop-cutoff)
++below(1000px)
   .footer__navi, .footer__info
     float: none
   
@@ -67,7 +67,7 @@ $footer-text-link = mix(#FFF, $footer-bgcolor, 70%)
     text-decoration: underline
 
 // 小于桌面布局：桌面里的左栏占满宽度，内部内容平均分栏
-+below(rupture.desktop-cutoff)
++below(1000px)
   .footer__navi__section
     col(1/($section-count - 2))
     margin-bottom: 20px
