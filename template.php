@@ -647,6 +647,22 @@ function sse_preprocess_page(&$variables, $hook)
 }
 
 /**
+ * implement hook_theme()
+ */
+function sse_theme($existing, $type, $theme, $path) {
+  return [
+    'notice_subscribe_block' => [
+      'template' => 'templates/block--notice-subscribe-block',
+      'variables' => ['url' => null]
+    ],
+    'notice_filter_block' => [
+      'template' => 'templates/block--notice-filter-block',
+      'variables' => ['filters' => null]
+    ]
+  ];
+}
+
+/**
  * Override or insert variables into the page templates.
  *
  * @param $variables
@@ -720,7 +736,7 @@ function sse_preprocess_region(&$variables, $hook) {
  * @param $hook
  *   The name of the template being rendered ("block" in this case.)
  */
-/* -- Delete this line if you want to use this function
+/*
 function sse_preprocess_block(&$variables, $hook) {
   // Add a count to all the blocks in the region.
   // $variables['classes_array'][] = 'count-' . $variables['block_id'];
