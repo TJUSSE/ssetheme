@@ -18,14 +18,14 @@ tar xzf banners.tar.gz
 该项目前端使用 [gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md) 及相关工具链编译。如果您没有 gulp，请先安装 gulp。
 
 ```bash
-npm install --global gulp
+cnpm install --global gulp
 ```
 
 ### 安装编译依赖
 
 ```bash
 # cd sseweb/sites/default/themes/sse
-npm install
+cnpm install --unsafe-perm
 ```
 
 注意，对于 Windows 来说，请手工删除 `node_modules` 及子目录下的 `.info` 文件。
