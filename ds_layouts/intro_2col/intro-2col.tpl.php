@@ -10,13 +10,17 @@ if (($left && !$right) || ($right && !$left)) {
 <<?php print $layout_wrapper; print $layout_attributes; ?> class="<?php print $classes;?> clearfix">
   <?php if ($left): ?>
     <<?php print $left_wrapper ?> class="intro__left<?php print $left_classes; ?>">
-      <?php print $left; ?>
+      <div class="intro-col__inner">
+        <?php print $left; ?>
+      </div>
     </<?php print $left_wrapper ?>>
   <?php endif; ?>
 
   <?php if ($right): ?>
     <<?php print $right_wrapper ?> class="intro__right<?php print $right_classes; ?>">
-      <?php print $right; ?>
+      <div class="intro-col__inner">
+        <?php print $right; ?>
+      </div>
     </<?php print $right_wrapper ?>>
   <?php endif; ?>
 </<?php print $layout_wrapper ?>>

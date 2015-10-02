@@ -13,25 +13,26 @@
           <?php print sse_navigation_main_output(); ?>
         </nav>
       </div>
+      <?php if (!sse_has_sidenav()): ?>
+        <div class="title-section title-section--wide"><div class="content-container clearfix">
+          <?php include __DIR__.'/title.tpl.php'; ?>
+        </div></div>
+      <?php endif; ?>
     </header>
   </section>
 
   <section class="page-row page-row-expanded">
-    <div class="content<?php if (sse_has_sidenav()) print ' content-has-sidenav'; ?>">
+    <div class="content<?php print (sse_has_sidenav() ? ' content-has-sidenav' : ' content-no-sidenav'); ?>">
       <div class="content-container clearfix">
         <?php if (sse_has_sidenav()) { print sse_sidenav_output(); } ?>
         <section class="main-content">
-          <?php print sse_breadcrumb_output(); ?>
           <a id="main-content"></a>
+          <?php if (sse_has_sidenav()): ?>
+          <div class="title-section title-section--box">
+            <?php include __DIR__.'/title.tpl.php'; ?>
+          </div>
+          <?php endif; ?>
           <div class="typo">
-<?php if ($title): ?>
-            <h1 class="page__title title" id="page-title">
-              <?php print $title; ?>
-              <?php if (isset($node) && $node->type === 'teacher_content' && !empty($node->field_teacher_pinyin) && $GLOBALS['language']->language === 'zh-hans'): ?>
-                <small class="teacher__pinyin"><?php print $node->field_teacher_pinyin[LANGUAGE_NONE][0]['safe_value']; ?></small>
-              <?php endif; ?>
-            </h1>
-<?php endif; ?>
             <?php print $messages; ?>
             <?php print render($page['content']); ?>
           </div>
@@ -41,7 +42,7 @@
   </section>
 
   <section class="page-row">
-    <?php include __DIR__.'/footer.tpl.php' ?>
+    <?php include __DIR__.'/footer.tpl.php'; ?>
   </section>
 
   <?php print render($page['bottom']); ?>

@@ -30,18 +30,47 @@
 .main-content
   margin-bottom: 50px
 
-#page-title
-  margin-top: 20px
+.title-section--wide
+  position: absolute
+  left: 0
+  bottom: 0
+  width: 100%
+  padding: 30px 0
+  background: rgba(#222, 95%)
+  
+  .page__title
+    margin-top: 5px
+
+for $section-name, $section-color in $section-colors
+  .body-section-{$section-name} .title-section--wide .page__title
+    color: lighten($section-color, 30%)
 
 .breadcrumb-container
   font-size: 14px
   color: #888
-  margin-top: 20px
 
 .breadcrumb__item, .breadcrumb__item:visited, .breadcrumb__item:active
   color: #AAA
   text-decoration: none
 
 .breadcrumb__item--link:hover
-  color: #444
   text-decoration: underline
+  
+.title-section--box
+  .breadcrumb__item--link:hover
+    color: #444
+
+.title-section--wide
+  .breadcrumb__item--link:hover
+    color: #FFF
+
+.title-section--box
+  .page__title
+    margin-top: 20px
+
+  .breadcrumb-container
+    margin-top: 20px
+
+.content-no-sidenav
+  .intro-col__inner
+    margin-top: 40px
