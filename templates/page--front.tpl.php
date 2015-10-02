@@ -39,4 +39,4 @@
     <?php print render($page['content']); ?>
   </section>
   
-  <?php include __DIR__.'/footer.tpl.php' ?>
+  <?php include __DIR__.'/inc--footer.tpl.php' ?>

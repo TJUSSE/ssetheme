@@ -15,7 +15,7 @@
       </div>
       <?php if (!sse_has_sidenav()): ?>
         <div class="title-section title-section--wide"><div class="content-container clearfix">
-          <?php include __DIR__.'/title.tpl.php'; ?>
+          <?php include __DIR__.'/inc--title.tpl.php'; ?>
         </div></div>
       <?php endif; ?>
     </header>
@@ -29,7 +29,7 @@
           <a id="main-content"></a>
           <?php if (sse_has_sidenav()): ?>
           <div class="title-section title-section--box">
-            <?php include __DIR__.'/title.tpl.php'; ?>
+            <?php include __DIR__.'/inc--title.tpl.php'; ?>
           </div>
           <?php endif; ?>
           <div class="typo">
@@ -42,7 +42,7 @@
   </section>
 
   <section class="page-row">
-    <?php include __DIR__.'/footer.tpl.php'; ?>
+    <?php include __DIR__.'/inc--footer.tpl.php'; ?>
   </section>
 
   <?php print render($page['bottom']); ?>

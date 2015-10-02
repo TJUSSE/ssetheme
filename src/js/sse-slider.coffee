@@ -21,7 +21,7 @@ class IndexSlider
     @imageLoader = new ImageLoader()
     @slideNum = $('.index__slider--data-item').length
     @initDOM()
-    @resize()
+    #@resize()
     @addListeners()
     @changeToSlide 0 if @slideNum > 0
 
@@ -43,11 +43,11 @@ class IndexSlider
     $('.index__slider__role-next').click ->
       self.changeToNext()
 
-    $(window).resize ->
-      self.resize()
+    #$(window).resize ->
+    #  self.resize()
 
-  resize: ->
-    $('.index__slider').css('height', window.innerHeight + 'px')
+  #resize: ->
+  #  $('.index__slider').css('height', window.innerHeight + 'px')
 
   showSpinner: ->
     $('.index__slider__spinner').addClass('index__slider__spinner--show')
