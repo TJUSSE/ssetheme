@@ -156,8 +156,8 @@ function sse_get_trail()
         }
       }
     }
+    $trail[count($trail) - 1]['__last'] = true;
   }
-  $trail[count($trail) - 1]['__last'] = true;
   return $trail;
 }
 
@@ -196,6 +196,11 @@ function sse_get_current_section()
 function sse_get_breadcrumb()
 {
   $route = sse_get_trail();
+  // 修正第二项
+  if (sse_has_sidenav()) {
+    $sidenav = sse_get_sidenav();
+    $route[1]['href'] = $sidenav['parent']['href'];
+  }
   return $route;
 }
 
@@ -531,35 +536,67 @@ function sse_has_sidenav()
 }
 
 /**
+ * 返回侧栏
+ */
+function sse_get_sidenav() {
+  static $sidenav = null;
+  if (!sse_has_sidenav()) {
+    return null;
+  }
+  if ($sidenav === null) {
+    $route = sse_get_trail();
+    $parent = $route[1];
+    $param = [
+      'active_trail' => [$parent['plid']],
+      'only_active_trail' => false,
+      'min_depth' => $parent['depth'] + 1,
+      'max_depth' => $parent['depth'] + 1,
+      'conditions' => ['plid' => $parent['mlid']],
+    ];
+    $items = array_values(menu_build_tree($parent['menu_name'], $param));
+    // 修正链接到第一个子项
+    if (count($items) > 0 && $parent['href'] === '<front>') {
+      $parent['href'] = $items[0]['link']['href'];
+    }
+    $entity = menu_fields_load_by_mlid($parent['mlid'])->wrapper();
+    $menu_id = $entity->field_navigation_menu_id->value();
+    // 预处理菜单
+    $subitems = [];
+    foreach ($items as &$item) {
+      $subitems[] = [
+        'href' => $item['link']['href'],
+        'title' => $item['link']['title'],
+        'active' => ((count($route) >= 3 && $item['link']['mlid'] === $route[2]['mlid']))
+      ];
+    }
+    unset($item);
+    $sidenav = [
+      'menu_id' => $menu_id,
+      'parent' => [
+        'title' => $parent['title'],
+        'href' => $parent['href']
+      ],
+      'subitems' => $subitems
+    ];
+  }
+  return $sidenav;
+}
+
+/**
  * 返回侧栏导航 HTML
  */
 function sse_sidenav_output()
 {
-  if (!sse_has_sidenav()) {
-    return '';
+  $data = sse_get_sidenav();
+  if ($data === null) {
+    return;
   }
-  $route = sse_get_trail();
-  $parent = $route[1];
-  $param = [
-    'active_trail' => [$parent['plid']],
-    'only_active_trail' => false,
-    'min_depth' => $parent['depth'] + 1,
-    'max_depth' => $parent['depth'] + 1,
-    'conditions' => ['plid' => $parent['mlid']],
-  ];
-  $items = array_values(menu_build_tree($parent['menu_name'], $param));
-  $entity = menu_fields_load_by_mlid($parent['mlid'])->wrapper();
-  $menu_id = $entity->field_navigation_menu_id->value();
-  $output = '<nav class="sidenav sidenav--section-'.check_plain($menu_id).'">';
-  // 修正链接到第一个子项
-  if (count($items) > 0 && $parent['href'] === '<front>') {
-    $parent['href'] = $items[0]['link']['href'];
-  }
-  $output .= '<h1 class="sidenav__title"><a href="'.url($parent['href']).'" target="_self" class="sidenav__title__link">'. check_plain($parent['title']) .'</a></h1>';
+  $output = '<nav class="sidenav sidenav--section-'.check_plain($data['menu_id']).'">';
+  $output .= '<h1 class="sidenav__title"><a href="'.url($data['parent']['href']).'" target="_self" class="sidenav__title__link">'. check_plain($data['parent']['title']) .'</a></h1>';
   $output .= '<div class="sidenav__edge"></div><ul class="sidenav__list">';
-  foreach ($items as &$item) {
-    $output .= '<li class="sidenav__item'. ((count($route) >= 3 && $item['link']['mlid'] === $route[2]['mlid']) ? ' sidenav__item--active' : '') .'">';
-    $output .= '<a href="'.url($item['link']['href']).'" target="_self" class="sidenav__item__link">'.check_plain($item['link']['title']).'</a>';
+  foreach ($data['subitems'] as &$item) {
+    $output .= '<li class="sidenav__item'. (($item['active']) ? ' sidenav__item--active' : '') .'">';
+    $output .= '<a href="'.url($item['href']).'" target="_self" class="sidenav__item__link">'.check_plain($item['title']).'</a>';
     $output .= '</li>';
   }
   unset($item);

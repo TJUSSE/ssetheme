@@ -24,7 +24,6 @@
           <?php print sse_breadcrumb_output(); ?>
           <a id="main-content"></a>
           <div class="typo">
-            <?php print render($title_prefix); ?>
 <?php if ($title): ?>
             <h1 class="page__title title" id="page-title">
               <?php print $title; ?>
@@ -33,7 +32,6 @@
               <?php endif; ?>
             </h1>
 <?php endif; ?>
-            <?php print render($title_suffix); ?>
             <?php print $messages; ?>
             <?php print render($page['content']); ?>
           </div>
