@@ -506,15 +506,15 @@ function sse_footer_link_output()
 
   $output = '';
   // 输出语言链接
-  $output .= '<a href="'.base_path().'zh">中文</a> ';
-  $output .= '<a href="'.base_path().'en">ENGLISH</a> ';
+  $output .= '<a href="'.base_path().'zh">中文</a> · ';
+  $output .= '<a href="'.base_path().'en">ENGLISH</a>';
   // 输出额外链接
   $footer_menu = menu_tree_all_data(sse_menu_footer);
   foreach ($footer_menu as $key => &$item) {
     if ($item['link']['hidden'] === true) {
       continue;
     }
-    $output .= '<a href="'.url($item['link']['href']).'">'.check_plain($item['link']['title']).'</a>';
+    $output .= ' · <a href="'.url($item['link']['href']).'">'.check_plain($item['link']['title']).'</a>';
   }
   unset($item);
 

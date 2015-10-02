@@ -28,6 +28,7 @@ $footer-text-link = mix(#FFF, $footer-bgcolor, 70%)
 .footer__info
   float: right
   text-align: right
+  color: darken($footer-text, 30%)
   
   p
     margin: 10px 0
@@ -84,16 +85,16 @@ $footer-text-link = mix(#FFF, $footer-bgcolor, 70%)
     text-align: center
 
 .footer__navi__section__title
-  font-size: 18px
+  font-size: 16px
   color: #FFF
   border-left: $footer-section-ribbon solid $primary-color
   padding-left: $footer-section-gutter - $footer-section-ribbon
-  margin-bottom: 10px
+  margin-bottom: 0.8em
 
 .footer__navi__section__item
-  font-size: 16px
+  font-size: 14px
   margin-left: $footer-section-gutter
-  line-height: 30px
+  line-height: 2em
 
 for $section-name, $section-color in $section-colors
   .footer__navi__section--{$section-name} .footer__navi__section__title
