@@ -82,3 +82,40 @@
     background-color: $section-colors['notice']
     border-color: @background-color
     color: #FFF
+    
+
+.notice-filter__item
+  position relative
+
+.notice-filter__item .is-highlight
+  background rgb(27, 93, 180) !important
+  color #FFF
+  margin-left -10px
+  padding-left 10px
+  max-width 140px
+
+.rightbar__module .notice-filter-module
+  overflow visible
+  
+@media screen and (min-width:1001px)
+  .notice-filter__item .notice-filter__filters
+    float right
+    background #f8f8f8
+    width 140px
+    height (28*4)px
+    position absolute
+    overflow hidden
+    // margin-left -163px
+    left -155px
+    margin-top -25px
+    padding-left 10px
+    transition all .2s linear
+    opacity 0
+
+  .notice-filter__item .notice-filter__filters:hover,
+  .notice-filter__item .notice-filter__filters:active,
+  .notice-filter__item:hover > .notice-filter__filters
+    // width 140px
+    left -165px
+    opacity 1
+    
