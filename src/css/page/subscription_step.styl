@@ -1,0 +1,95 @@
+$inactive-bg-color = #f4f4f4
+$active-bg-color = lighten($section-colors['default'], 80%)
+$active-fore-color = lighten($section-colors['default'], 10%)
+
+.subscription__step-container
+  margin: 70px 0
+
+.subscription__step
+  col(1/4, gutter: 0)
+  position: relative
+  padding-top: 35px
+
+.subscription__step__text
+  text-align: center
+  margin-top: 10px
+
+.subscription__step--passed
+  .subscription__step__text
+    color: #888
+
+.subscription__step--current
+  .subscription__step__text
+    color: #222
+
+.subscription__step--todo
+  .subscription__step__text
+    color: #CCC
+
+.subscription__step__dot
+  position: absolute
+  width: 30px
+  height: 30px
+  margin-left: -15px
+  left: 50%
+  top: 0
+  border-radius: 50%
+
+.subscription__step--passed
+  .subscription__step__dot
+    background: $active-bg-color
+
+.subscription__step--current
+  .subscription__step__dot
+    background: $active-bg-color
+  .subscription__step__dot-inner
+    background: $active-fore-color
+
+.subscription__step--todo
+  .subscription__step__dot
+    background: $inactive-bg-color
+
+.subscription__step__dot-inner
+  position: absolute
+  width: 14px
+  height: 14px
+  margin-left: -7px
+  margin-top: -7px
+  left: 50%
+  top: 50%
+  border-radius: 50%
+
+.subscription__step__progress
+  height: 8px
+  top: 11px
+  width: 100%
+  background: $inactive-bg-color
+  position: absolute
+
+.subscription__step:first-child .subscription__step__progress
+  left: 50%
+  width: 50%
+
+.subscription__step:last-child .subscription__step__progress
+  right: 50%
+  width: 50%
+
+.subscription__step__progress-inner
+  height: 100%
+
+.subscription__step--passed
+  .subscription__step__progress-inner
+    background: $active-bg-color
+
+.subscription__step--current
+  .subscription__step__progress-inner
+    width: 50%
+    background: $active-bg-color
+
+.subscription__step--current:first-child
+  .subscription__step__progress-inner
+    width: 0%
+
+.subscription__step--current:last-child
+  .subscription__step__progress-inner
+    width: 100%

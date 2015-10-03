@@ -48,6 +48,14 @@ $sse_admission_type_parent_menu = [
   'doctoral' => ['admission', 'doctoral'],
 ];
 
+global $sse_subscription_steps;
+$sse_subscription_steps = [
+  '填写邮箱',
+  '发送验证邮件',
+  '选择订阅内容',
+  '完成'
+];
+
 /**
  * 返回该主题基目录的 URI
  */
@@ -605,6 +613,15 @@ function sse_sidenav_output()
 }
 
 /**
+ * 返回所有订阅步骤
+ */
+function sse_get_subscription_steps()
+{
+  global $sse_subscription_steps;
+  return $sse_subscription_steps;
+}
+
+/**
  * Override or insert variables into the maintenance page template.
  *
  * @param $variables
@@ -669,7 +686,13 @@ function sse_preprocess_page(&$variables, $hook)
   }
 
   if (arg(0) === 'index') {
-    drupal_add_js(drupal_get_path('theme', 'sse') .'/js/sse-slider.js', 'file');
+    drupal_add_js(drupal_get_path('theme', 'sse') .'/js/index-slider.js', 'file');
+    return;
+  }
+
+  // 所有订阅相关操作，加上订阅脚本
+  if (arg(0) === 'subscribe') {
+    drupal_add_js(drupal_get_path('theme', 'sse') .'/js/subscribe.js', 'file');
     return;
   }
 
@@ -695,7 +718,19 @@ function sse_theme($existing, $type, $theme, $path) {
     'notice_filter_block' => [
       'template' => 'templates/block--notice-filter-block',
       'variables' => ['filters' => null]
-    ]
+    ],
+    'sse_subscription_enter' => [
+      'template' => 'templates/subscription--enter',
+      'variables' => ['post_action' => null]
+    ],
+    'sse_subscription_sub' => [
+      'template' => 'templates/subscription--sub',
+      'variables' => ['post_action' => null, 'email' => null, 'hmac' => null, 'topics' => null]
+    ],
+    'sse_subscription_unsub' => [
+      'template' => 'templates/subscription--unsub',
+      'variables' => ['email' => null, 'subscribe_action' => null]
+    ],
   ];
 }
 

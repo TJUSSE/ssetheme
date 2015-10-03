@@ -1,0 +1,48 @@
+$focus-border-color = $section-colors['default']
+$focus-shadow-color = lighten($focus-border-color, 60%)
+
+.sse_action_link, .sse_textbox, .sse_button
+  font-size: 12px
+
+.sse_textbox
+  border: 1px solid #DDD
+  background: #FFF
+  padding: 5px
+  margin: 0
+  width: 18em
+  line-height: 1.8em
+  outline: 0
+
+  &:focus
+    box-shadow: 0 0 0 2px $focus-shadow-color
+    border-color: $focus-border-color
+  
+  &:disabled
+    pointer-events: none
+    opacity: 0.4
+
+.sse_button
+  padding: 4px 15px
+  border: 2px solid #F0F0F0
+  background: #F0F0F0
+  color: #333
+  line-height: 1.8em
+  outline: 0
+  
+  &:hover
+    color: #FFF
+    border-color: $focus-border-color
+    background: $focus-border-color
+  
+  &.rounded
+    border-radius: 17px
+  
+  &:disabled
+    pointer-events: none
+    opacity: 0.4
+
+.form__line
+  margin: 20px 0
+  
+  &.center
+    text-align: center
