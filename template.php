@@ -63,7 +63,7 @@ function sse_theme_asset_path()
 {
   static $path = null;
   if ($path === null) {
-    $path = base_path().path_to_theme();
+    $path = base_path().drupal_get_path('theme', 'sse_theme');
   }
   return $path;
 }
@@ -632,7 +632,7 @@ function sse_theme_get_subscription_steps()
 function sse_theme_preprocess_html(&$variables, $hook)
 {
   $variables['base_path'] = base_path();
-  $variables['path_to_sse'] = drupal_get_path('theme', 'sse');
+  $variables['path_to_sse'] = drupal_get_path('theme', 'sse_theme');
 
   // 为登录界面增加样式
   if (arg(0) == 'user' && !$GLOBALS['user']->uid) {
@@ -663,18 +663,18 @@ function sse_theme_preprocess_page(&$variables, $hook)
     if (!in_array('page__user__login', $variables['theme_hook_suggestions'])) {
       $variables['theme_hook_suggestions'][] = 'page__user__login';
     }
-    drupal_add_js(drupal_get_path('theme', 'sse') .'/js/login.js', 'file');
+    drupal_add_js(drupal_get_path('theme', 'sse_theme') .'/js/login.js', 'file');
     return;
   }
 
   if (arg(0) === 'index') {
-    drupal_add_js(drupal_get_path('theme', 'sse') .'/js/index-slider.js', 'file');
+    drupal_add_js(drupal_get_path('theme', 'sse_theme') .'/js/index-slider.js', 'file');
     return;
   }
 
   // 所有订阅相关操作，加上订阅脚本
   if (arg(0) === 'subscribe') {
-    drupal_add_js(drupal_get_path('theme', 'sse') .'/js/subscribe.js', 'file');
+    drupal_add_js(drupal_get_path('theme', 'sse_theme') .'/js/subscribe.js', 'file');
     return;
   }
 
@@ -682,8 +682,8 @@ function sse_theme_preprocess_page(&$variables, $hook)
   $header = drupal_get_http_header('status');
   if ($header === '404 Not Found' || $header === '403 Forbidden') {
     $variables['theme_hook_suggestions'][] = 'page__404_403';
-    drupal_add_js(drupal_get_path('theme', 'sse') .'/js/vendor/jquery.terminal-0.8.8.min.js', 'file');
-    drupal_add_js(drupal_get_path('theme', 'sse') .'/js/error-404-403.js', 'file');
+    drupal_add_js(drupal_get_path('theme', 'sse_theme') .'/js/vendor/jquery.terminal-0.8.8.min.js', 'file');
+    drupal_add_js(drupal_get_path('theme', 'sse_theme') .'/js/error-404-403.js', 'file');
     return;
   }
 }
