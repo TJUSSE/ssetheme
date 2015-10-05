@@ -99,7 +99,6 @@
 .typo
   a.notice__tag, a.notice__tag:visited, a.notice__tag:active
     display: inline-block
-    background: $section-text-colors['notice']
     color: #FFF
     font-size: 12px
     padding: 0 10px
@@ -108,9 +107,14 @@
     line-height: 22px
     border: 0
   a.notice__tag:hover
-    background: lighten($section-text-colors['notice'], 20%)
     color: #FFF
     border: 0
+
+  for $tag-name, $tag-color in $notice-tag-colors
+    a.notice__tag--{$tag-name}
+      background: $tag-color
+      &:hover
+        background: lighten($tag-color, 20%)
 
 @media screen and (min-width:1001px)
   .notice-filter__item .notice-filter__filters

@@ -33,7 +33,7 @@
   foreach ($terms as &$term) {
     print l($term->name, entity_uri('taxonomy_term', $term)['path'], [
       'attributes' => [
-        'class' => 'notice__tag'
+        'class' => 'notice__tag notice__tag--'.$term->vocabulary_machine_name
       ]
     ]);
   }
