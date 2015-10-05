@@ -82,7 +82,6 @@
     background-color: $section-colors['notice']
     border-color: @background-color
     color: #FFF
-    
 
 .notice-filter__item
   position relative
@@ -96,7 +95,23 @@
 
 .rightbar__module .notice-filter-module
   overflow visible
-  
+
+.typo
+  a.notice__tag, a.notice__tag:visited, a.notice__tag:active
+    display: inline-block
+    background: $section-text-colors['notice']
+    color: #FFF
+    font-size: 12px
+    padding: 0 10px
+    margin: 2px 5px 2px 0
+    border-radius: 12px
+    line-height: 22px
+    border: 0
+  a.notice__tag:hover
+    background: lighten($section-text-colors['notice'], 20%)
+    color: #FFF
+    border: 0
+
 @media screen and (min-width:1001px)
   .notice-filter__item .notice-filter__filters
     float right
