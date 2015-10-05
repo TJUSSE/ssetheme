@@ -1,4 +1,4 @@
-<?php print sse_breadcrumb_output(); ?>
+<?php print sse_theme_breadcrumb_output(); ?>
 <?php if ($title): ?>
 <h1 class="page__title title" id="page-title">
   <?php print $title; ?>

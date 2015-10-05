@@ -5,7 +5,7 @@
 代码库中不自带各个栏目的 banners，可以使用以下方式获取我们默认提供的 banners：
 
 ```bash
-# cd sseweb/sites/default/themes/sse
+# cd sseweb/sites/default/themes/sse_theme
 cd img/banners
 wget http://cdug.tongji.edu.cn/sse/banners.tar.gz
 tar xzf banners.tar.gz
@@ -24,7 +24,7 @@ cnpm install --global gulp
 ### 安装编译依赖
 
 ```bash
-# cd sseweb/sites/default/themes/sse
+# cd sseweb/sites/default/themes/sse_theme
 cnpm install --unsafe-perm
 ```
 
@@ -33,7 +33,7 @@ cnpm install --unsafe-perm
 ### 编译生成前端
 
 ```bash
-# cd sseweb/sites/default/themes/sse
+# cd sseweb/sites/default/themes/sse_theme
 gulp
 ```
 
@@ -42,7 +42,7 @@ gulp
 添加 `--watch` 参数，使得源码变更后自动重新编译：
 
 ```bash
-# cd sseweb/sites/default/themes/sse
+# cd sseweb/sites/default/themes/sse_theme
 gulp --watch
 ```
 

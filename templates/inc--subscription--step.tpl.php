@@ -1,5 +1,5 @@
 <div class="subscription__step-container clearfix">
-<?php foreach (sse_get_subscription_steps() as $index => $step): ?>
+<?php foreach (sse_theme_get_subscription_steps() as $index => $step): ?>
   <div class="subscription__step <?php
 if ($subscription_current === $index) {
   print 'subscription__step--current';

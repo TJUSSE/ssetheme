@@ -1,0 +1,33 @@
+screenshot  = screenshot.png
+name        = 同济软院
+description = 同济大学软件学院网站主站主题
+
+core        = 7.x
+base theme  = zen
+
+stylesheets[all][] = system.menus.css
+stylesheets[all][] = system.messages.css
+stylesheets[all][] = system.theme.css
+stylesheets[all][] = node/node.css
+
+stylesheets[all][] = css/style.css
+
+scripts[] = js/vendor/pangu-2.5.7.js
+scripts[] = js/sse.js
+
+regions[content]        = Content
+regions[footer]         = Footer
+regions[bottom]         = Page bottom
+regions[page_top]       = Page top
+regions[page_bottom]    = Page bottom
+
+features[] = name
+features[] = slogan
+features[] = node_user_picture
+features[] = comment_user_picture
+features[] = favicon
+features[] = main_menu
+features[] = secondary_menu
+
+settings[zen_rebuild_registry]     = 1
+settings[zen_wireframes]           = 0
