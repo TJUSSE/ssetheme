@@ -719,6 +719,22 @@ function sse_theme($existing, $type, $theme, $path) {
       'template' => 'templates/block--notice-filter-block',
       'variables' => ['filters' => null]
     ],
+    'ds_field_news_notice_created' => [
+      'template' => 'templates/ds-field--news-notice-created',
+      'variables' => ['field' => null]
+    ],
+    'ds_field_notice_deadline' => [
+      'template' => 'templates/ds-field--notice-deadline',
+      'variables' => ['field' => null]
+    ],
+    'ds_field_notice_tag' => [
+      'template' => 'templates/ds-field--notice-tag',
+      'variables' => ['field' => null]
+    ],
+    'ds_field_teacher_title_office' => [
+      'template' => 'templates/ds-field--teacher-title-office',
+      'variables' => ['field' => null]
+    ],
     'sse_subscription_enter' => [
       'template' => 'templates/subscription--enter',
       'variables' => ['post_action' => null]
