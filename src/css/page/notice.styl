@@ -1,3 +1,5 @@
+$notice-filter-popup-width = 140px
+
 .notice-subscribe-module
   height: 200px
   position: relative
@@ -83,16 +85,6 @@
     border-color: @background-color
     color: #FFF
 
-.notice-filter__item
-  position relative
-
-.notice-filter__item .is-highlight
-  background rgb(27, 93, 180) !important
-  color #FFF
-  margin-left -10px
-  padding-left 10px
-  max-width 140px
-
 .rightbar__module .notice-filter-module
   overflow visible
 
@@ -119,25 +111,47 @@
 .notice-filter__block
   margin-bottom: 20px
 
-@media screen and (min-width:1001px)
-  .notice-filter__item .notice-filter__filters
-    float right
-    background #f8f8f8
-    width 140px
-    height (28*4)px
-    position absolute
-    overflow hidden
-    // margin-left -163px
-    left -155px
-    margin-top -25px
-    padding-left 10px
-    transition all .2s linear
-    opacity 0
+.notice-filter__item
+  display: inline-block
+  position: relative
+  margin: 1px 0
+  font-size: 14px
 
-  .notice-filter__item .notice-filter__filters:hover,
-  .notice-filter__item .notice-filter__filters:active,
-  .notice-filter__item:hover > .notice-filter__filters
-    // width 140px
-    left -165px
-    opacity 1
-    
+.notice-filter__item__text
+  display: inline-block
+  padding: 3px 10px
+  cursor: pointer
+
+  &:hover
+    background: #F0F0F0
+
+  &.is-highlight
+    background: $section-colors['notice']
+    color: #FFF
+
+.notice-filter__item
+  .notice-filter__filters
+    background: #FFF
+    width: $notice-filter-popup-width
+    box-shadow: 0 4px 5px 0 rgba(#000, 0.1)
+    position: absolute
+    opacity: 0
+    left: unit(-($notice-filter-popup-width - 10), 'px')
+    top: 0
+    transition: left .2s, opacity .2s, visibility 0s linear 0.2s
+    visibility: hidden
+    transition-timing-function: easeOutCubic
+  
+  &:hover
+    .notice-filter__filters
+      visibility: visible
+      transition-delay: 0s
+      left: unit(-($notice-filter-popup-width), 'px')
+      opacity: 1
+
+// 二级
+.notice-filter__item
+  .notice-filter__item
+    display: block
+  .notice-filter__item__text
+    display: block

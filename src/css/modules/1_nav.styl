@@ -113,9 +113,9 @@ for $section-name, $section-color in $section-colors
   opacity: 0
   text-align: left
   // 菜单下滑动画
-  transition: transform .2s, opacity .2s 
-  // 鼠标移入时，动画是 easeOut，移出时，动画是 easeIn
-  transition-timing-function: easeInCubic
+  transition: transform .2s, opacity .2s
+  // 似乎保持 easeOut 效果更好
+  transition-timing-function: easeOutCubic
 
 .nav__list--lv1
   transform: translateY(-30px)
@@ -123,8 +123,6 @@ for $section-name, $section-color in $section-colors
 .nav__i--lv0:hover .nav__list--lv1, .nav__i--lv1:hover .nav__list--lv2
   transform: translateX(0) translateY(0)
   opacity: 1
-  // 鼠标移入时，动画是 easeOut，移出时，动画是 easeIn
-  transition-timing-function: easeOutCubic
 
 // 内页样式
 .nav__list--nf--lv1
