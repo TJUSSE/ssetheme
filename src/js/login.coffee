@@ -4,14 +4,14 @@ jQuery(document).ready ->
   ctx = canvas.getContext('2d')
 
   pr = window.devicePixelRatio || 1
-  w = window.innerWidth
-  h = window.innerHeight
+  w = window.innerWidth * pr
+  h = window.innerHeight * pr
 
   step = 100
   hue = 0
 
-  canvas.width = w*pr
-  canvas.height = h*pr
+  canvas.width = w
+  canvas.height = h
 
   triangles = []
 
