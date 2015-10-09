@@ -93,6 +93,7 @@ class IndexSlider
     
     $newImage = $('<div>').addClass('index__slider__item index__slider__image').css('background-image', 'url("' + imgUrl + '")').appendTo('.index__slider__image-area')
     $newContent = $('<div>').addClass('index__slider__item index__slider__text').html($slide.html()).appendTo('.index__slider__content-area')
+    $newContent.addClass('without--body') if $slide.hasClass('without--body')
 
     $('.index__slider').width()
     $newImage.addClass('index__slider__item--shown')
