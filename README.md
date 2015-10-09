@@ -74,6 +74,10 @@ gulp --watch
 
 - [paranoid-auto-spacing](https://github.com/vinta/paranoid-auto-spacing)
 
+- [jquery.terminal](https://github.com/jcubic/jquery.terminal)
+
+- [jquery.sticky-kit](http://leafo.net/sticky-kit/)
+
 ## License
 
 MIT license

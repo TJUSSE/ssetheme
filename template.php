@@ -599,7 +599,8 @@ function sse_theme_sidenav_output()
   if ($data === null) {
     return;
   }
-  $output = '<nav class="sidenav sidenav--section-'.check_plain($data['menu_id']).'">';
+  $output = '<div class="sidenav-container">';
+  $output .= '<nav class="sidenav sidenav--section-'.check_plain($data['menu_id']).'">';
   $output .= '<h1 class="sidenav__title"><a href="'.url($data['parent']['href']).'" target="_self" class="sidenav__title__link">'. check_plain($data['parent']['title']) .'</a></h1>';
   $output .= '<div class="sidenav__edge"></div><ul class="sidenav__list">';
   foreach ($data['subitems'] as &$item) {
@@ -608,7 +609,7 @@ function sse_theme_sidenav_output()
     $output .= '</li>';
   }
   unset($item);
-  $output .= '</ul></nav>';
+  $output .= '</ul></nav></div>';
   return $output;
 }
 

@@ -1,8 +1,31 @@
-jQuery(document).ready ->
+$ = jQuery
 
-  # 有内容页面，对内容页面添加空格
-  if jQuery('.format--pangu').length > 0
-    pangu.element_spacing('.format--pangu')
+for status in ['active', 'inactive']
+  do (status) ->
+    WebFontConfig[status] = -> $(document).trigger 'webfontStatusChanged', status
+
+# 有内容页面，对内容页面添加空格
+letterSpacing =
+  init: ->
+    $(document).ready @enable
+  enable: ->
+    return if $('.format--pangu').length is 0
+    pangu.element_spacing '.format--pangu'
+
+# Sticky sidebar and headings
+stickys = 
+  init: ->
+    $(document).on 'webfontStatusChanged', @enable
+  enable: ->
+    # 左侧边栏
+    $('.sidenav').stick_in_parent
+      offset_top: 20
+      parent: '.content-container'
+
+letterSpacing.init()
+stickys.init()
+
+$(document).ready ->
 
   noticeFilter = ->
     # notice filter

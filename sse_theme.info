@@ -13,6 +13,7 @@ stylesheets[all][] = node/node.css
 stylesheets[all][] = css/style.css
 
 scripts[] = js/vendor/pangu-2.5.7.js
+scripts[] = js/vendor/jquery.sticky-kit.min.js
 scripts[] = js/sse.js
 
 regions[content]        = Content

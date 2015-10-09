@@ -204,10 +204,17 @@ figcaption
 */
 
 /* 保证块/段落之间的空白隔行 */
-.typo p, .typo pre, .typo li, .typo ul, .typo ol, .typo dl, .typo form, .typo hr, .typo table,
-.cke_editable p, .cke_editable pre, .cke_editable li, .cke_editable ul, .cke_editable ol, .cke_editable dl, .cke_editable form, .cke_editable hr, .cke_editable table,
-.typo-p, .typo-pre, .typo-li, .typo-ul, .typo-ol, .typo-dl, .typo-form, .typo-hr, .typo-table, blockquote
-  margin-bottom: 1.2em
+.typo p, .typo pre, .typo dl, .typo form, .typo hr, .typo table,
+.cke_editable p, .cke_editable pre, .cke_editable dl, .cke_editable form, .cke_editable hr, .cke_editable table,
+.typo-p, .typo-pre, .typo-dl, .typo-form, .typo-hr, .typo-table, blockquote
+  padding-top: 0.5em
+  padding-bottom: 0.5em
+
+.typo li, .typo ol,
+.cke_editable li, .cke_editable ol,
+.typo-li, .typo-ol
+  padding-top: 0.25em
+  padding-bottom: 0.25em
 
 
 h1, h2, h3, h4, h5, h6
@@ -259,6 +266,15 @@ for $section-name, $section-color in $section-text-colors
   margin-bottom: 0.6em
   line-height: 1.35
 
+.typo .h2wrap
+  font-size: 1.8em
+  margin-top: 1.2em
+  margin-bottom: 0.6em
+
+  h2
+    font-size: 1em
+    margin-top: 0
+    margin-bottom: 0
 
 .typo h1,
 .cke_editable h1,

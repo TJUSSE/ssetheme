@@ -3,6 +3,7 @@ $sidenav-bgcolor = #3D3D3D
 .sidenav
   position: relative
   top: -60px
+  margin-bottom: 20px
 
 // 折角效果
 .sidenav__edge
@@ -76,5 +77,5 @@ for $section-name, $section-color in $section-colors
 
 // 手机：隐藏
 +below(780px)
-  .sidenav
+  .sidenav-container
     display: none

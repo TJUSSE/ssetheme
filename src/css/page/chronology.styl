@@ -11,8 +11,6 @@ $chronology-circle-size = 12
   padding-left: 20px
   list-style: none
   margin-left: 10px
-  margin-bottom: 0
-  padding-bottom: 1.2em
   position: relative
 
 .chronology-list-content li::before
@@ -20,7 +18,7 @@ $chronology-circle-size = 12
   display: block
   position: absolute
   left: unit($chronology-width / 2 - $chronology-circle-size / 2 - $chronology-width, 'px')
-  top: unit(16 * 1.8 / 2 - $chronology-circle-size / 2, 'px')  // todo: 16 -> non-magic
+  top: unit(16 * 1.8 / 2 - $chronology-circle-size / 2 + 16 * 0.25, 'px')
   width: unit($chronology-radius * 2, 'px')
   height: unit($chronology-radius * 2, 'px')
   border-radius: 50%
