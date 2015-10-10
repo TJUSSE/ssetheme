@@ -22,8 +22,21 @@ stickys =
       offset_top: 20
       parent: '.content-container'
 
+# remove first element margin-top
+removeMarginTop =
+  init: ->
+    $(document).ready @enable
+  process: ($dom) ->
+    $dom.css 'margin-top', 0
+    $children = $dom.children()
+    removeMarginTop.process $children.eq(0) if $children.length > 0
+  enable: ->
+    return if $('.format--pangu').length is 0
+    removeMarginTop.process $('.format--pangu')
+
 letterSpacing.init()
 stickys.init()
+removeMarginTop.init()
 
 $(document).ready ->
 
