@@ -12,7 +12,7 @@ letterSpacing =
     return if $('.format--pangu').length is 0
     pangu.element_spacing '.format--pangu'
 
-# Sticky sidebar and headings
+# Sticky sidebar and rightbar
 stickys = 
   init: ->
     $(document).on 'webfontStatusChanged', @enable
@@ -21,6 +21,10 @@ stickys =
     $('.sidenav').stick_in_parent
       offset_top: 20
       parent: '.content-container'
+    # 右侧边栏
+    $('.intro-layout--two-col > .intro__right > .intro-col__inner').stick_in_parent
+      offset_top: 20
+      parent: '.intro-layout--two-col'
 
 # remove first element margin-top
 removeMarginTop =
@@ -32,6 +36,7 @@ removeMarginTop =
     removeMarginTop.process $children.eq(0) if $children.length > 0
   enable: ->
     return if $('.format--pangu').length is 0
+    return if $('.title-section--box .page__title').length is 0
     removeMarginTop.process $('.format--pangu')
 
 letterSpacing.init()
