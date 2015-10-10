@@ -17,7 +17,7 @@ class ImageLoader
 class IndexSlider
 
   init: ->
-    @switchInterval = 4000
+    @switchInterval = 5000
     @imageLoader = new ImageLoader()
     @slideNum = $('.index__slider--data-item').length
     @initDOM()
