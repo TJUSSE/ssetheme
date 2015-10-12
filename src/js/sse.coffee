@@ -1,9 +1,5 @@
 $ = jQuery
 
-for status in ['active', 'inactive']
-  do (status) ->
-    WebFontConfig[status] = -> $(document).trigger 'webfontStatusChanged', status
-
 # 有内容页面，对内容页面添加空格
 letterSpacing =
   init: ->
@@ -15,7 +11,7 @@ letterSpacing =
 # Sticky sidebar and rightbar
 stickys = 
   init: ->
-    $(document).on 'webfontStatusChanged', @enable.bind(@)
+    $(document).ready @enable.bind(@)
   enable: ->
     # 左侧边栏
     $('.sidenav').stick_in_parent
