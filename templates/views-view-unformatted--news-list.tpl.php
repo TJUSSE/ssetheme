@@ -4,8 +4,14 @@
 
 $sse_groups = [];
 
+if ($GLOBALS['language']->language === 'zh-hans') {
+  $date_format = 'Y 年 n 月';
+} else {
+  $date_format = 'F, Y';
+}
+
 foreach ($rows as $id => $row) {
-  $sse_current_year_month = date('Y 年 n 月', $view->result[$id]->node_created);
+  $sse_current_year_month = date($date_format, $view->result[$id]->node_created);
   if (!isset($sse_groups[$sse_current_year_month])) {
     $sse_groups[$sse_current_year_month] = [];
   }

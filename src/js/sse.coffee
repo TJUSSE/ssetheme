@@ -27,7 +27,7 @@ removeEmptyParagraph =
   init: ->
     $(document).ready @enable.bind(@)
   enable: ->
-    $('.format--pangu p').each -> $(@).remove() if $(@).text().trim().length is 0
+    $('.format--pangu p').each -> $(@).remove() if ($(@).text().trim().length is 0) and ($(@).children().length is 0)
 
 # remove first element margin-top
 removeMarginTop =
