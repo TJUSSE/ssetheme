@@ -32,13 +32,13 @@ $sse_theme_section_colors = [
 
 global $sse_theme_node_type_parent_menu;
 $sse_theme_node_type_parent_menu = [
-  'club_content' => ['activity', 'club'],
-  'chronology_content' => ['overview', 'chronology'],
-  'teacher_content' => ['education', 'faculty'],
-  'research_team_content' => ['research', 'team'],
-  'excellent_curriculum_content' => ['education', 'achievements'],
-  'news_content' => ['news'],
-  'notice_content' => ['notice'],
+  'club_content' => 'club',
+  'chronology_content' => 'chronology',
+  'teacher_content' => 'faculty',
+  'research_team_content' => 'team',
+  'excellent_curriculum_content' => 'achievements',
+  'news_content' => 'news',
+  'notice_content' => 'notice',
 ];
 
 global $sse_theme_admission_type_parent_menu;
@@ -81,13 +81,13 @@ function sse_theme_get_section_color($key)
   }
 }
 
-function sse_theme_transform_trail(&$trail, $node, $navi_menu_path)
+function sse_theme_transform_trail(&$trail, $node, $navi_menu_subid)
 {
   // 对于新闻和通知节点，菜单项是 sse_theme_menu_main，需要特殊处理
-  if ($navi_menu_path[0] === 'news' || $navi_menu_path[0] === 'notice') {
+  if ($navi_menu_subid === 'news' || $navi_menu_subid === 'notice') {
     $navi_menu = sse_theme_get_menu_tree_with_id(sse_theme_menu_main, 1, true);
     foreach ($navi_menu as &$top_menu) {
-      if (isset($top_menu['id']) && $top_menu['id'] === $navi_menu_path[0]) {
+      if (isset($top_menu['id']) && $top_menu['id'] === $navi_menu_subid) {
         array_splice($trail, 1);
         // 增加一级菜单
         $shadow = $top_menu;
@@ -104,26 +104,23 @@ function sse_theme_transform_trail(&$trail, $node, $navi_menu_path)
   } else {
     $navi_menu = sse_theme_get_menu_tree_with_id(sse_theme_menu_navigation, 2, true);
     foreach ($navi_menu as &$top_menu) {
-      if (isset($top_menu['id']) && $top_menu['id'] === $navi_menu_path[0]) {
-        foreach ($top_menu['items'] as &$item) {
-          if (isset($item['subid']) && $item['subid'] === $navi_menu_path[1]) {
-            array_splice($trail, 1);
-            // 增加一级菜单
-            $shadow = $top_menu;
-            unset($shadow['items']);
-            $trail[] = $shadow;
-            // 增加二级菜单
-            $trail[] = $item;
-            // 增加节点菜单
-            $shadow = (array)$node;
-            $shadow['href'] = node_uri($node)['path'];
-            $trail[] = $shadow;
-            return;
-          }
+      foreach ($top_menu['items'] as &$item) {
+        if (isset($item['subid']) && $item['subid'] === $navi_menu_subid) {
+          array_splice($trail, 1);
+          // 增加一级菜单
+          $shadow = $top_menu;
+          unset($shadow['items']);
+          $trail[] = $shadow;
+          // 增加二级菜单
+          $trail[] = $item;
+          // 增加节点菜单
+          $shadow = (array)$node;
+          $shadow['href'] = node_uri($node)['path'];
+          $trail[] = $shadow;
+          return;
         }
-        unset($item);
-        return;
       }
+      unset($item);
     }
     unset($top_menu);
   }
@@ -256,6 +253,7 @@ function sse_theme_process_menu_tree_with_id(&$tree, $preserve_raw = false)
   }
 
   $entity = menu_fields_load_by_mlid($tree['link']['mlid']);
+
   if ($entity !== null) {
     $entity = $entity->wrapper();
     if (isset($entity->field_navigation_menu_id)) {
