@@ -10,9 +10,9 @@
     }
   ?>
   <span class="<?php print $class; ?>">
-    截止时间: <?php print $output; ?>
+    <?php print t('Deadline is '); print $output; ?>
     <?php if ($remaining >= 0): ?>
-      <?php print t(", 剩余 @days 天", ['@days' => $remaining]); ?></span>
+      <?php print t(", @days days remaining", ['@days' => $remaining]); ?></span>
     <?php endif; ?>
   </span>
 <?php endif; ?>

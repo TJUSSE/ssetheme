@@ -22,6 +22,12 @@ stickys =
       offset_top: 20
       parent: '.intro-layout--two-col'
 
+removeEmptyParagraph =
+  init: ->
+    $(document).ready @enable.bind(@)
+  enable: ->
+    $('.format--pangu p').each -> $(@).remove() if $(@).text().trim().length is 0
+
 # remove first element margin-top
 removeMarginTop =
   init: ->
@@ -123,7 +129,8 @@ noticeFilter =
     @updateSelectionToDOM()
     $(document).on 'click', '.notice-filter__item__text', @onItemClick.bind(@)
 
-letterSpacing.init()
-stickys.init()
+removeEmptyParagraph.init()
 removeMarginTop.init()
+letterSpacing.init()
 noticeFilter.init()
+stickys.init()
