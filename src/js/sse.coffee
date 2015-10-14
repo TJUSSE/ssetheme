@@ -21,6 +21,7 @@ stickys =
     $('.intro-layout--two-col > .intro__right > .intro-col__inner').stick_in_parent
       offset_top: 20
       parent: '.intro-layout--two-col'
+    $(window).resize()
 
 removeEmptyParagraph =
   init: ->
