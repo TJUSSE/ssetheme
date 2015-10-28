@@ -1,6 +1,6 @@
 <?php
-$sse_index_has_hyperlink = !is_null($row->field_field_index_news_dest[0]);
-$sse_index_has_body = count($row->field_body) > 0 && strlen($row->field_body[0]['raw']['value']) > 0;
+$sse_index_has_hyperlink = isset($row->field_field_index_news_dest[0]) && !is_null($row->field_field_index_news_dest[0]);
+$sse_index_has_body = isset($row->field_body) && count($row->field_body) > 0 && strlen($row->field_body[0]['raw']['value']) > 0;
 ?>
 <div class="index__slider--data-item<?php if (!$sse_index_has_body) print ' without--body'; ?>" data-src="<?php print $fields['field_index_news_image']->content; ?>">
   <h2>
